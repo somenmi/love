@@ -8,6 +8,16 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>Музыка — AWALORES</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // Принудительный запрос Fullscreen при загрузке (если нужно)
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("fullscreen") === "true") {
+        setTimeout(() => {
+          document.getElementById("fullscreen-icon")?.click();
+        }, 300);
+      }
+    });
+  </script>
 </head>
 
 <body>

@@ -575,6 +575,11 @@ lottie-player {
 }
 
 /*--------------------------------FULLSCREEN-------------------------------------------------------*/
+/* Принудительный fullscreen-режим */
+:fullscreen, ::backdrop {
+  background-color: #000 !important;
+}
+
 #fullscreen-icon {
   position: fixed;
   top: 10px;
@@ -594,6 +599,14 @@ lottie-player {
 }
 
 #fullscreen-icon.active {
-  filter: opacity(50%)
+  filter: opacity(50%);
+  transform: scale(1.1);
+}
+
+/* Фикс для iOS */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
 }
 

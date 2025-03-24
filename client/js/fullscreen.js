@@ -45,34 +45,32 @@ function delayNavigation(event) {
 
 class FullScreenManager {
   constructor() {
-    // Жёсткая привязка методов к экземпляру класса
-    this.isFullscreen = this.isFullscreen.bind(this);
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.enterFullscreen = this.enterFullscreen.bind(this);
-    this.exitFullscreen = this.exitFullscreen.bind(this);
-    this.saveState = this.saveState.bind(this);
-    this.handleFullscreenChange = this.handleFullscreenChange.bind(this);
-
     this.icon = document.getElementById("fullscreen-icon");
     if (!this.icon) return;
 
+    // Привязка контекста
+    this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    
+    // Инициализация
     this.init();
   }
 
   init() {
-    // Восстановление состояния при загрузке
+    // Восстановление состояния
     this.restoreState();
-
-    // Обработчики событий
+    
+    // Обработчик клика
     this.icon.addEventListener("click", this.toggleFullscreen);
-
-    // Слушатели изменения состояния FullScreen
-    document.addEventListener('fullscreenchange', this.handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', this.handleFullscreenChange);
-    document.addEventListener('mozfullscreenchange', this.handleFullscreenChange);
+    
+    // Глобальный обработчик клавиш (Esc)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.isFullscreen()) {
+        this.saveState(false);
+      }
+    });
   }
 
-  // Проверка текущего состояния FullScreen
+  // Проверка состояния
   isFullscreen() {
     return !!(
       document.fullscreenElement ||
@@ -80,22 +78,6 @@ class FullScreenManager {
       document.mozFullScreenElement ||
       document.msFullscreenElement
     );
-  }
-
-  async getFullscreenState() {
-    try {
-      const response = await fetch(`${SERVER_URL}/api/fullscreen?t=${Date.now()}`, {
-        credentials: 'include',
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      });
-      const data = await response.json();
-      return data.fullscreen;
-    } catch (error) {
-      console.error("Ошибка при получении состояния:", error);
-      return localStorage.getItem('fullscreen') === 'true'; // Fallback
-    }
   }
 
   // Переключение режима
@@ -107,76 +89,91 @@ class FullScreenManager {
         await this.enterFullscreen();
       }
     } catch (error) {
-      console.error("Fullscreen toggle error:", error);
+      console.error("Fullscreen error:", error);
+      // Fallback для iOS
+      this.toggleFullscreenFallback();
     }
   }
 
-  // Вход в FullScreen
+  // Вход в Fullscreen
   async enterFullscreen() {
-    if (this.isFullscreen()) return;
-
     const element = document.documentElement;
     try {
-      const requestFn = element.requestFullscreen ||
-        element.webkitRequestFullscreen ||
-        element.mozRequestFullScreen ||
-        element.msRequestFullscreen;
-
+      const requestFn = element.requestFullscreen || 
+                      element.webkitRequestFullscreen || 
+                      element.mozRequestFullScreen || 
+                      element.msRequestFullscreen;
+      
       if (requestFn) {
         await requestFn.call(element);
         this.saveState(true);
       }
     } catch (err) {
       console.error("Enter fullscreen failed:", err);
+      throw err;
     }
   }
 
-  // Выход из FullScreen
+  // Выход из Fullscreen
   async exitFullscreen() {
-    if (!this.isFullscreen()) return;
-
     try {
-      const exitFn = document.exitFullscreen ||
-        document.webkitExitFullscreen ||
-        document.mozCancelFullScreen ||
-        document.msExitFullscreen;
-
+      const exitFn = document.exitFullscreen || 
+                    document.webkitExitFullscreen || 
+                    document.mozCancelFullScreen || 
+                    document.msExitFullscreen;
+      
       if (exitFn) {
         await exitFn.call(document);
         this.saveState(false);
       }
     } catch (err) {
       console.error("Exit fullscreen failed:", err);
+      throw err;
     }
   }
 
   // Сохранение состояния
   saveState(isActive) {
-    try {
-      localStorage.setItem('fullscreen', String(isActive));
-      this.icon?.classList.toggle('active', isActive);
-    } catch (e) {
-      console.warn("LocalStorage access error:", e);
+    // 1. LocalStorage для быстрого доступа
+    localStorage.setItem("fullscreen", isActive ? "true" : "false");
+    
+    // 2. Если есть сервер - синхронизируем
+    if (typeof SERVER_URL !== "undefined") {
+      fetch(`${SERVER_URL}/api/fullscreen`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullscreen: isActive }),
+        credentials: "include"
+      }).catch(e => console.log("Server sync error:", e));
     }
+    
+    // 3. Визуальное обновление
+    this.icon.classList.toggle("active", isActive);
   }
 
   // Восстановление состояния
   restoreState() {
-    try {
-      const savedState = localStorage.getItem('fullscreen') === 'true';
-      this.icon?.classList.toggle('active', savedState);
-    } catch (e) {
-      console.warn("LocalStorage read error:", e);
-    }
+    const savedState = localStorage.getItem("fullscreen") === "true";
+    this.icon.classList.toggle("active", savedState);
+    
+    // Автоматический вход только по действию пользователя
+    document.addEventListener("click", () => {
+      if (savedState && !this.isFullscreen()) {
+        this.enterFullscreen().catch(e => console.log(e));
+      }
+    }, { once: true });
   }
 
-  // Обработчик изменения состояния
-  handleFullscreenChange() {
-    this.saveState(this.isFullscreen());
+  // Fallback для мобильных устройств
+  toggleFullscreenFallback() {
+    if (!document.fullscreenEnabled) {
+      alert("Fullscreen mode requires user gesture. Please tap again.");
+    }
   }
 }
 
-
+// Инициализация
+new FullScreenManager();
 
 // Защищённая инициализация
 document.addEventListener("DOMContentLoaded", () => {

@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script>
+        // Принудительный запрос Fullscreen при загрузке (если нужно)
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("fullscreen") === "true") {
+                setTimeout(() => {
+                    document.getElementById("fullscreen-icon")?.click();
+                }, 300);
+            }
+        });
+    </script>
 </head>
 
 <body>
