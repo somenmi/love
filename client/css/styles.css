@@ -588,3 +588,7 @@ lottie-player {
   width: 32px;
   height: 32px;
 }
+
+#fullscreen-icon.active svg {
+  fill: #ff0000; /* Пример: красный цвет при активном FullScreen */
+}

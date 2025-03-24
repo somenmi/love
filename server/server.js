@@ -1,47 +1,47 @@
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-// Настройка CORS
+// Настройка CORS для GitHub Pages и локального развития
 app.use(cors({
-  origin: "http://localhost:5500", // Разрешить запросы от клиента
-  credentials: true, // Разрешить передачу куки и заголовков авторизации
+  origin: ["https://somenmi.github.io", "http://localhost:5500"],
+  credentials: true
 }));
 
-// Настройка сессий
-app.use(
-  session({
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Для localhost используйте false, для HTTPS — true
-  })
-);
+// Настройка сессий с постоянным хранилищем
+app.use(session({
+  secret: "your-secret-key-here",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { 
+    secure: false, // Для GitHub Pages нужно true + HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 1 день
+  }
+}));
 
-// Middleware для обработки JSON
+// Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// API для обновления состояния FullScreen
+// API для FullScreen
 app.post("/api/fullscreen", (req, res) => {
-  const { fullscreen } = req.body;
-  req.session.fullscreen = fullscreen; // Сохраняем состояние в сессии
-  res.sendStatus(200);
+  req.session.fullscreen = req.body.fullscreen;
+  res.json({ success: true });
 });
 
-// API для получения состояния FullScreen
 app.get("/api/fullscreen", (req, res) => {
-  const fullscreen = req.session.fullscreen || false; // Получаем состояние из сессии
-  res.json({ fullscreen });
+  res.json({ fullscreen: req.session.fullscreen || false });
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
+// Статический файл для проверки
+app.get("/test", (req, res) => {
+  res.send("Server is running");
 });
 
-// Запуск сервера
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
