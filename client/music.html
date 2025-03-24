@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Музыка — AWALORES</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <!-- Иконка для управления FullScreen -->
+  <div id="fullscreen-icon">
+    <img src="assets/icons/fullscreen.svg" alt="FullScreen">
+  </div>
+  <!-- Фон -->
+  <div class="background" style="filter: sepia(1) saturate(5) brightness(2.1)"></div>
+  <!-- Основной контент -->
+  <main class="index-music-container">
+    <!-- Первый слайдер (альбомы) -->
+    <div class="music-header">
+      <h1>Альбомы</h1>
+      <p>Тут вы найдёте все альбомы и релизы, а также ссылки на Youtube Music</p>
+    </div>
+
+    <div class="slider-container">
+      <!-- Кнопка "Назад" -->
+      <button class="slider-button left-button">
+        <img src="assets/icons/left.svg" alt="Назад">
+      </button>
+
+      <!-- Область слайдера -->
+      <div class="slider">
+        <div class="slider-track">
+          <div class="slider-item">
+            <img src="assets/images/it_too_much.png" alt="It Too Much">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/itm.png" alt="ITM">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/moral_violence.png" alt="Moral Violence">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/freedom_irl_exists.png" alt="Freedom IRL Exists">
+          </div>
+        </div>
+      </div>
+
+      <!-- Кнопка "Вперёд" -->
+      <button class="slider-button right-button">
+        <img src="assets/icons/right.svg" alt="Вперёд">
+      </button>
+    </div>
+
+    <!-- Второй слайдер (синглы) -->
+    <div class="music-header">
+      <h1>Синглы</h1>
+      <!-- <p>Тут вы найдёте все синглы и мини-релизы</p> -->
+    </div>
+
+    <div class="slider-container">
+      <!-- Кнопка "Назад" -->
+      <button class="slider-button left-button">
+        <img src="assets/icons/left.svg" alt="Назад">
+      </button>
+
+      <!-- Область слайдера -->
+      <div class="slider">
+        <div class="slider-track">
+          <div class="slider-item">
+            <img src="assets/images/to_pieces.png" alt="To Pieces">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/deficit.png" alt="Deficit / Дефицт">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/now.png" alt="Now">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/later.png" alt="Later">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/new_year.png" alt="Happy New Year Listeners">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/hp.png" alt="Handpan Song from Non-Existence">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/behind_heart.png" alt="Behind Heart (2023 Remastered)">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/you_know.png" alt="You Know / Ты же знаешь">
+          </div>
+          <div class="slider-item">
+            <img src="assets/images/grace.png" alt="Grace">
+          </div>
+        </div>
+      </div>
+
+      <!-- Кнопка "Вперёд" -->
+      <button class="slider-button right-button">
+        <img src="assets/icons/right.svg" alt="Вперёд">
+      </button>
+    </div>
+  </main>
+
+  <!-- Нижняя плашка с иконками -->
+  <nav class="bottom-nav">
+    <div class="nav-icons-container">
+      <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
+        <img src="assets/icons/music.svg" alt="Музыка">
+      </a>
+      <a href="index.html" class="nav-icon" onclick="delayNavigation(event)">
+        <img src="assets/icons/home.svg" alt="Главная">
+      </a>
+      <a href="faq.html" class="nav-icon" onclick="delayNavigation(event)">
+        <img src="assets/icons/faq.svg" alt="FAQ">
+      </a>
+    </div>
+  </nav>
+
+  <script src="js/slider.js"></script>
+  <script src="js/fullscreen.js"></script>
+
+</body>
+
+</html>

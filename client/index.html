@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Love — AWALORES</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Проверяем, была ли заставка показана
+        if (!localStorage.getItem("splashShown")) {
+            // Если нет, перенаправляем на splash.html
+            window.location.href = "splash.html";
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Иконка для управления FullScreen -->
+    <div id="fullscreen-icon">
+        <img src="assets/icons/fullscreen.svg" alt="FullScreen">
+    </div>
+    <!-- Фон -->
+    <div class="background" style="filter: saturate(1.5) brightness(1.6)"></div>
+
+    <!-- Основной контент -->
+    <main class="index-container">
+        <!-- Контейнер для обложки и плеера -->
+        <div class="album-container">
+            <!-- Обложка альбома -->
+            <img src="assets/images/albumlogo.jpg" alt="Обложка альбома" class="album-cover">
+
+            <!-- Контейнер для иконок PLAY/PAUSE -->
+            <div id="play-button" class="play-button">
+                <img src="assets/icons/play.svg" alt="Play" class="play-icon" id="play-icon">
+                <img src="assets/icons/pause.svg" alt="Pause" class="pause-icon" id="pause-icon" style="display: none;">
+            </div>
+
+            <!-- Аудио-элемент -->
+            <audio id="preview-audio">
+                <source src="assets/audio/preview.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает аудио.
+            </audio>
+        </div>
+    </main>
+    <!-- Нижняя плашка с иконками -->
+    <nav class="bottom-nav">
+        <div class="nav-icons-container">
+            <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
+                <img src="assets/icons/music.svg" alt="Музыка">
+            </a>
+            <a href="index.html" class="nav-icon" onclick="delayNavigation(event)">
+                <img src="assets/icons/home.svg" alt="Главная">
+            </a>
+            <a href="faq.html" class="nav-icon"  onclick="delayNavigation(event)">
+                <img src="assets/icons/faq.svg" alt="FAQ">
+            </a>
+        </div>
+    </nav>
+    <script src="js/audio-player.js"></script>
+    <script src="js/fullscreen.js"></script>
+</body>
+
+</html>
