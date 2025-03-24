@@ -582,6 +582,7 @@ lottie-player {
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg);
+  transition: all 0.3s;
 }
 
 #fullscreen-icon img {
@@ -589,6 +590,6 @@ lottie-player {
   height: 32px;
 }
 
-#fullscreen-icon.active svg {
-  fill: #ff0000; /* Пример: красный цвет при активном FullScreen */
+#fullscreen-icon.active {
+  filter: opacity(50%)
 }
