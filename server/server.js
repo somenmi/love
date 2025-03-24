@@ -62,6 +62,12 @@ app.get("/api/fullscreen", (req, res) => {
   });
 });
 
+// для Lottie JSON (анимация)
+app.get('/client/assets/lottie/*', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.sendFile(path.join(__dirname, req.path));
+});
+
 // Health Check
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
