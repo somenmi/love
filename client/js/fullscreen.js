@@ -13,9 +13,9 @@ function delayNavigation(event) {
     const targetUrl = event.currentTarget.href;
 
     // 2. Сохраняем текущее состояние FullScreen
-    const isFullscreen = document.fullscreenElement || 
-                        document.webkitFullscreenElement ||
-                        document.mozFullScreenElement;
+    const isFullscreen = document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement;
 
     // 3. Если используется сервер (Vercel)
     if (typeof SERVER_URL !== 'undefined') {
@@ -29,7 +29,7 @@ function delayNavigation(event) {
       }).catch(() => {
         window.location.href = targetUrl; // Fallback если сервер недоступен
       });
-    } 
+    }
     // 4. Клиентский вариант (localStorage)
     else {
       localStorage.setItem('fullscreen', isFullscreen ? 'true' : 'false');
@@ -80,6 +80,22 @@ class FullScreenManager {
       document.mozFullScreenElement ||
       document.msFullscreenElement
     );
+  }
+
+  async getFullscreenState() {
+    try {
+      const response = await fetch(`${SERVER_URL}/api/fullscreen?t=${Date.now()}`, {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      const data = await response.json();
+      return data.fullscreen;
+    } catch (error) {
+      console.error("Ошибка при получении состояния:", error);
+      return localStorage.getItem('fullscreen') === 'true'; // Fallback
+    }
   }
 
   // Переключение режима
@@ -159,6 +175,8 @@ class FullScreenManager {
     this.saveState(this.isFullscreen());
   }
 }
+
+
 
 // Защищённая инициализация
 document.addEventListener("DOMContentLoaded", () => {

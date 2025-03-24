@@ -27,6 +27,11 @@ body::before {
   pointer-events: none; /* Чтобы градиент не блокировал клики */
 }
 
+/* Анимация при переходе между страницами */
+body.page-transition {
+  animation: fadeIn 0.3s ease;
+}
+
 /* Фон */
 .background {
   position: fixed; /* Фиксируем фон */
@@ -65,16 +70,14 @@ h1 {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 850px;
-  /* Высота градиента */
+  height: 850px; /* Высота градиента */
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
   padding-bottom: 15px;
-  z-index: 2;
-  /* Для Safari */
-  pointer-events: none;
-  /* Чтобы клики проходили сквозь градиент */
+  z-index: 2; /* Для Safari */
+  pointer-events: none; /* Чтобы клики проходили сквозь градиент */
+  transition: opacity 0.3s ease;
 }
 
 .back-gradient {
@@ -593,3 +596,4 @@ lottie-player {
 #fullscreen-icon.active {
   filter: opacity(50%)
 }
+

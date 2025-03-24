@@ -49,9 +49,16 @@ app.post("/api/fullscreen", (req, res) => {
 });
 
 app.get("/api/fullscreen", (req, res) => {
-  res.json({
+  // Добавляем заголовки, запрещающие кэширование
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
+  });
+  
+  res.json({ 
     fullscreen: Boolean(req.session.fullscreen),
-    timestamp: new Date().toISOString()
+    timestamp: Date.now() // Уникальное значение для каждого запроса
   });
 });
 
