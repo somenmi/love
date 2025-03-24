@@ -1,5 +1,5 @@
 // Конфигурация
-const SERVER_URL = 'https://your-vercel-app.vercel.app/api/fullscreen'; // Замените на ваш хостинг
+const SERVER_URL = 'https://love-three-sandy.vercel.app/'; // Замените на ваш хостинг
 
 class FullScreenManager {
     constructor() {
