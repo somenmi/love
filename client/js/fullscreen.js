@@ -1,5 +1,5 @@
 // Конфигурация
-const SERVER_URL = 'https://love-three-sandy.vercel.app'; // Замените на ваш хостинг
+const SERVER_URL = "https://love-three-sandy.vercel.app";  // Без /api в конце!
 
 class FullScreenManager {
     constructor() {
