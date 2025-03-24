@@ -2,7 +2,46 @@
 const SERVER_URL = "https://love-three-sandy.vercel.app";
 
 // Для клиентского варианта (без сервера):
-// (ничего не добавляем)
+/**
+ * Функция для задержки перехода между страницами
+ * Сохраняет состояние FullScreen перед переходом
+ */
+function delayNavigation(event) {
+  try {
+    // 1. Отменяем стандартное поведение ссылки
+    event.preventDefault();
+    const targetUrl = event.currentTarget.href;
+
+    // 2. Сохраняем текущее состояние FullScreen
+    const isFullscreen = document.fullscreenElement || 
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement;
+
+    // 3. Если используется сервер (Vercel)
+    if (typeof SERVER_URL !== 'undefined') {
+      fetch(`${SERVER_URL}/api/fullscreen`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullscreen: isFullscreen }),
+        credentials: 'include'
+      }).then(() => {
+        window.location.href = targetUrl;
+      }).catch(() => {
+        window.location.href = targetUrl; // Fallback если сервер недоступен
+      });
+    } 
+    // 4. Клиентский вариант (localStorage)
+    else {
+      localStorage.setItem('fullscreen', isFullscreen ? 'true' : 'false');
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 50); // Минимальная задержка
+    }
+  } catch (e) {
+    console.error('Navigation error:', e);
+    window.location.href = event.currentTarget.href; // Аварийный переход
+  }
+}
 
 class FullScreenManager {
   constructor() {
