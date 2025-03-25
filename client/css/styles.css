@@ -575,32 +575,83 @@ lottie-player {
 }
 
 /*--------------------------------FULLSCREEN-------------------------------------------------------*/
-/* Принудительный fullscreen-режим */
-:fullscreen, ::backdrop {
-  background-color: #000 !important;
-}
 
 #fullscreen-icon {
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 6px;
   cursor: pointer;
   z-index: 1000;
+  text-align: center;
   border-radius: 50%;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg);
   transition: all 0.3s;
+  
+  /* Запрещаем выделение */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  
+  /* Запрещаем перетаскивание */
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+#fullscreen-icon * {
+  /* Применяем те же свойства ко всем дочерним элементам */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
 }
 
 #fullscreen-icon img {
   width: 32px;
   height: 32px;
+  transition: opacity 0.3s;
 }
 
 #fullscreen-icon.active {
-  filter: opacity(50%);
+  opacity: 0.4;
   transform: scale(1.1);
+}
+
+#fullscreen-icon.active .fullscreen-text {
+  opacity: 0; /* Полностью прозрачный текст в активном состоянии */
+  visibility: hidden; /* Дополнительно скрываем текст */
+}
+
+.fullscreen-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.fullscreen-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 10px;
+  line-height: 1.2;
+  text-shadow: 0 0 1px #ff69b4;
+  filter: drop-shadow(0 1px 4px rgba(255, 105, 180, 1));
+  width: 100%;
+  max-width: 60px;
+  opacity: 1; /* Изначально текст видим */
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s; /* Плавное исчезновение */
+}
+
+.fullscreen-text span {
+  display: block;
 }
 
 /* Фикс для iOS */

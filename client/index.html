@@ -7,7 +7,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <title>Love — AWALORES</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "MusicGroup",
+          "name": "AWALORES",
+          "description": "Современный музыкальный проект с уникальным звучанием, сочетающим элементы электронной музыки и атмосферные звуковые ландшафты.",
+          "foundingDate": "2022-09-09",
+          "genre": ["Экспериментальная музыка", "Электронная музыка" ,"Инди", "Эмбиент"],
+          "image": "https://avatars.yandex.net/get-music-content/13449652/515d9479.p.17363429/m1000x1000",
+          "sameAs": [
+            "https://band.link/awalores",
+            "https://vk.com/awalores",
+            "https://music.yandex.ru/artist/17363429",
+            "https://www.youtube.com/channel/UCQqDNJ4uwps4s9uXhW-oHVQ",
+            "https://www.tiktok.com/@awalores"
+          ],
+          "url": "https://love-three-sandy.vercel.app"
+        }
+    </script>
     <script>
         // Проверяем, была ли заставка показана
         if (!localStorage.getItem("splashShown")) {
@@ -23,12 +41,21 @@
             }
         });
     </script>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <!-- Иконка для управления FullScreen -->
+    <!-- Иконка для управления FullScreen с текстом -->
     <div id="fullscreen-icon">
-        <img src="assets/icons/fullscreen.svg" alt="FullScreen">
+        <div class="fullscreen-wrapper">
+            <img src="assets/icons/fullscreen.svg" alt="FullScreen">
+            <div class="fullscreen-text">
+                <span>нажми</span>
+                <span>на меня</span>
+                <span>и будет</span>
+                <span>красиво</span>
+            </div>
+        </div>
     </div>
     <!-- Фон -->
     <div class="background" style="filter: saturate(1.5) brightness(1.6)"></div>
@@ -67,6 +94,7 @@
             </a>
         </div>
     </nav>
+    <script src="script.js"></script>
     <script src="js/audio-player.js"></script>
     <script src="js/fullscreen.js" defer></script>
 </body>
