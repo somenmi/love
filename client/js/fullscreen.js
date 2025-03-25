@@ -92,3 +92,6 @@ function setupFullscreen() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', setupFullscreen);
+
+// При выходе/входе в fullscreen
+localStorage.setItem("fullscreen", isFullscreen ? "true" : "false");

@@ -32,14 +32,6 @@
             // Если нет, перенаправляем на splash.html
             window.location.href = "splash.html";
         }
-        // Принудительный запрос Fullscreen при загрузке (если нужно)
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("fullscreen") === "true") {
-                setTimeout(() => {
-                    document.getElementById("fullscreen-icon")?.click();
-                }, 300);
-            }
-        });
     </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
