@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>Музыка — AWALORES</title>
+  <title>Music — AWALORES</title>
   <link rel="stylesheet" href="css/styles.css">
   <script>
-    // Принудительный запрос Fullscreen при загрузке (если нужно)
     document.addEventListener("DOMContentLoaded", () => {
       if (localStorage.getItem("fullscreen") === "true") {
         setTimeout(() => {
@@ -21,7 +20,6 @@
 </head>
 
 <body>
-  <!-- Иконка для управления FullScreen с текстом -->
   <div id="fullscreen-icon">
     <div class="fullscreen-wrapper">
       <img src="assets/icons/fullscreen.svg" alt="FullScreen">
@@ -29,31 +27,24 @@
         <span>нажми</span>
         <span>на меня</span>
         <span>и будет</span>
-        <span>красиво</span><!--
-              <br>
-              <span style="font-size: 120%;">ПК</span>
-              <span style="font-size: 120%;">жми</span>
-              <span style="font-size: 150%;">F11</span> -->
+        <span>красиво</span>
       </div>
     </div>
   </div>
-  <!-- Фон -->
+
   <div class="background" style="filter: sepia(0.15) brightness(0.7)"></div>
-  <!-- Основной контент -->
+
   <main class="index-music-container">
-    <!-- Первый слайдер (альбомы) -->
     <div class="music-header">
       <h1>Альбомы</h1>
       <p>Тут вы найдёте все альбомы и релизы, а также ссылки на Youtube Music</p>
     </div>
 
     <div class="slider-container">
-      <!-- Кнопка "Назад" -->
       <button class="slider-button left-button">
         <img src="assets/icons/left.svg" alt="Назад">
       </button>
 
-      <!-- Область слайдера -->
       <div class="slider">
         <div class="slider-track">
           <div class="slider-item">
@@ -71,25 +62,20 @@
         </div>
       </div>
 
-      <!-- Кнопка "Вперёд" -->
       <button class="slider-button right-button">
         <img src="assets/icons/right.svg" alt="Вперёд">
       </button>
     </div>
 
-    <!-- Второй слайдер (синглы) -->
     <div class="music-header">
       <h1>Синглы</h1>
-      <!-- <p>Тут вы найдёте все синглы и мини-релизы</p> -->
     </div>
 
     <div class="slider-container">
-      <!-- Кнопка "Назад" -->
       <button class="slider-button left-button">
         <img src="assets/icons/left.svg" alt="Назад">
       </button>
 
-      <!-- Область слайдера -->
       <div class="slider">
         <div class="slider-track">
           <div class="slider-item">
@@ -122,14 +108,12 @@
         </div>
       </div>
 
-      <!-- Кнопка "Вперёд" -->
       <button class="slider-button right-button">
         <img src="assets/icons/right.svg" alt="Вперёд">
       </button>
     </div>
   </main>
 
-  <!-- Нижняя плашка с иконками -->
   <nav class="bottom-nav">
     <div class="nav-icons-container">
       <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
@@ -146,7 +130,6 @@
 
   <script src="js/slider.js"></script>
   <script src="js/fullscreen.js" defer></script>
-
 </body>
 
 </html>

@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>Love — AWALORES</title>
+    <title>Only — AWALORES</title>
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "MusicGroup",
           "name": "AWALORES",
-          "description": "Современный музыкальный проект с уникальным звучанием, сочетающим элементы электронной музыки и атмосферные звуковые ландшафты.",
+          "description": "Современный музыкальный проект с уникальным звучанием",
           "foundingDate": "2022-09-09",
-          "genre": ["Экспериментальная музыка", "Электронная музыка" ,"Инди", "Эмбиент"],
+          "genre": ["Экспериментальная музыка", "Электронная музыка", "Инди", "Эмбиент"],
           "image": "https://avatars.yandex.net/get-music-content/13449652/515d9479.p.17363429/m1000x1000",
           "sameAs": [
             "https://band.link/awalores",
@@ -27,9 +27,7 @@
         }
     </script>
     <script>
-        // Проверяем, была ли заставка показана
         if (!localStorage.getItem("splashShown")) {
-            // Если нет, перенаправляем на splash.html
             window.location.href = "splash.html";
         }
     </script>
@@ -37,7 +35,6 @@
 </head>
 
 <body>
-    <!-- Иконка для управления FullScreen с текстом -->
     <div id="fullscreen-icon">
         <div class="fullscreen-wrapper">
             <img src="assets/icons/fullscreen.svg" alt="FullScreen">
@@ -45,38 +42,29 @@
                 <span>нажми</span>
                 <span>на меня</span>
                 <span>и будет</span>
-                <span>красиво</span><!--
-                <br>
-                <span style="font-size: 120%;">ПК</span>
-                <span style="font-size: 120%;">жми</span>
-                <span style="font-size: 150%;">F11</span> -->
+                <span>красиво</span>
             </div>
         </div>
     </div>
-    <!-- Фон  style="filter: saturate(1.5) brightness(1.6)" -->
+
     <div class="background" style="filter: sepia(0.5) hue-rotate(-50deg) brightness(0.8)"></div>
 
-    <!-- Основной контент -->
     <main class="index-container">
-        <!-- Контейнер для обложки и плеера -->
         <div class="album-container">
-            <!-- Обложка альбома -->
             <img src="assets/images/albumlogo.png" alt="Обложка альбома" class="album-cover">
 
-            <!-- Контейнер для иконок PLAY/PAUSE -->
             <div id="play-button" class="play-button">
                 <img src="assets/icons/play.svg" alt="Play" class="play-icon" id="play-icon">
                 <img src="assets/icons/pause.svg" alt="Pause" class="pause-icon" id="pause-icon" style="display: none;">
             </div>
 
-            <!-- Аудио-элемент -->
             <audio id="preview-audio">
                 <source src="assets/audio/preview.mp3" type="audio/mpeg">
                 Ваш браузер не поддерживает аудио.
             </audio>
         </div>
     </main>
-    <!-- Нижняя плашка с иконками -->
+
     <nav class="bottom-nav">
         <div class="nav-icons-container">
             <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
@@ -90,9 +78,11 @@
             </a>
         </div>
     </nav>
+
     <div id="top-notification" class="top-notification">
-        👈 Чтобы было красиво, жми на иконку
+        👈 Чтобы было красиво,<br>жми на иконку
     </div>
+
     <script src="js/notification.js"></script>
     <script src="js/audio-player.js"></script>
     <script src="js/fullscreen.js" defer></script>

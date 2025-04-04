@@ -139,6 +139,46 @@ lottie-player {
   }
 }
 
+/*=========== КАЧАНИЯ ===========*/
+@keyframes lazy-rocking {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(-3px);
+  }
+}
+
+.album-cover {
+  animation: lazy-rocking 16s ease infinite;
+}
+
+@keyframes lazy-rocking {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(-2px);
+  }
+}
+
+.play-button {
+  animation: lazy-rocking 3s ease infinite;
+}
+
+@keyframes lazy-rocking {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(-2px);
+  }
+}
+
+.slider-item {
+  animation: lazy-rocking 6s ease infinite;
+}
+
 /*=========== АДАПТИВНОСТЬ ===========*/
 @media (max-width: 768px) {
   body::before {
@@ -228,7 +268,7 @@ lottie-player {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.85));
   box-sizing: border-box;
 }
 
@@ -266,9 +306,19 @@ lottie-player {
   padding: 10px 5px;
   margin: 10px 0;
   overflow-y: auto;
+  
+  /* Скрываем скроллбар */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  /* Маска для красивого скрытия текста внизу */
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
   padding-bottom: 30px;
+}
+
+.faq-text ul.show::-webkit-scrollbar {
+  display: none;
 }
 
 .faq-text ul li {
@@ -485,7 +535,7 @@ g {
   justify-content: center;
   cursor: pointer;
   margin-top: 20px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25)) saturate(0.75);
 }
 
 .play-icon,
@@ -743,13 +793,14 @@ g {
   left: 0;
   right: 0;
   margin: 0 auto;
+  margin-top: 5%;
   width: 90%;
-  max-width: 400px;
+  max-width: 200px;
   padding: 12px 20px;
   background-color: rgba(160, 111, 157, 0.9);
   color: white;
   text-align: center;
-  border-radius: 0 0 15px 15px;
+  border-radius: 15px 15px 15px 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 1001;
   font-size: 16px;
