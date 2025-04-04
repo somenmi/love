@@ -1,85 +1,49 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: Verdana, Geneva, sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden; /* Скрываем горизонтальный скролл */
-  background-color: rgb(131, 89, 128);
+  overflow-x: hidden;
+  background-color: rgb(0, 0, 0);
 }
 
-/* Градиент снизу */
-/* Оптимизированный градиент для всех устройств */
+/*=========== ФОНОВЫЕ ЭЛЕМЕНТЫ ===========*/
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
 body::before {
   content: "";
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50vh; /* Используем viewport height вместо фиксированных пикселей */
-  background: linear-gradient(
-    to top, 
-    rgba(36, 36, 36, 1) 0%, 
-    rgba(36, 36, 36, 0.7) 30%, 
-    rgba(36, 36, 36, 0) 100%
-  );
+  height: 50vh;
   z-index: 1;
   pointer-events: none;
-  
-  /* Поддержка старых браузеров */
-  background: -webkit-linear-gradient(
-    top,
-    rgba(36, 36, 36, 0),
-    rgba(36, 36, 36, 0.7) 30%,
-    rgba(36, 36, 36, 1) 100%
-  );
+  background: linear-gradient(to top, rgba(36, 36, 36, 1) 0%, rgba(21, 21, 21, 0) 100%);
+  background: -webkit-linear-gradient(top, rgba(36, 36, 36, 0), rgba(21, 21, 21, 1) 100%);
 }
 
-/* Медиа-запросы для тонкой настройки */
-@media (max-width: 768px) {
-  body::before {
-    height: 30vh; /* Меньшая высота на мобильных */
-    background: linear-gradient(
-      to top,
-      rgba(36, 36, 36, 1) 0%,
-      rgba(36, 36, 36, 0.5) 50%,
-      rgba(36, 36, 36, 0) 100%
-    );
-  }
-}
-
-@media (max-width: 480px) {
-  body::before {
-    height: 25vh; /* Еще меньше для маленьких экранов */
-  }
-}
-
-/* Анимация при переходе между страницами */
-body.page-transition {
-  animation: fadeIn 0.3s ease;
-}
-
-/* Фон */
-.background {
-  position: fixed; /* Фиксируем фон */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../assets/background.svg'); /* Путь к SVG-фону */
-  background-size: cover; /* Растягиваем фон на весь экран */
-  background-position: center; /* Центрируем фон */
-  background-repeat: no-repeat; /* Убираем повторение */
-  z-index: -1; /* Фон ниже всех элементов */
-}
-
+/*=========== ОСНОВНОЙ КОНТЕНТ ===========*/
 main {
   flex: 1;
   padding: 20px;
   text-align: center;
   position: relative;
   z-index: 1;
-  animation: fadeIn 0.5s ease-in-out; /* Применяем анимацию ко всем элементам внутри main */
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 h1 {
@@ -91,107 +55,79 @@ h1 {
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
 }
 
-/* Нижняя плашка с градиентом */
+/*=========== НИЖНЯЯ НАВИГАЦИЯ ===========*/
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 850px; /* Высота градиента */
+  height: 85px;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
   padding-bottom: 15px;
-  z-index: 2; /* Для Safari */
-  pointer-events: none; /* Чтобы клики проходили сквозь градиент */
+  z-index: 10;
+  pointer-events: none;
   transition: opacity 0.3s ease;
+  background: none !important;
 }
 
-.back-gradient {
-  height: 400px;
-  background: linear-gradient(to top, rgba(36, 36, 36, 1), rgba(36, 36, 36, 0));
-  background: -webkit-linear-gradient(
-    top,
-    rgba(36, 36, 36, 0),
-    rgb(0, 0, 0, 1)
-  );
-}
-
-/* Контейнер для иконок */
 .nav-icons-container {
   display: flex;
   justify-content: space-around;
   width: 100%;
   max-width: 400px;
-  /* Ограничиваем ширину контейнера */
   pointer-events: auto;
-  /* Возвращаем кликабельность иконкам */
 }
 
-/* Стили для иконок */
 .nav-icon img {
   width: 36px;
   height: 36px;
   transition: transform 0.2s ease;
-  /* Плавное увеличение при наведении */
-  filter: drop-shadow(0 0 18px rgba(160, 111, 157, 0.8)) brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg);
+  filter: drop-shadow(0 0 18px rgba(160, 111, 157, 0.8)) 
+          brightness(0) 
+          saturate(100%) 
+          invert(50%) 
+          sepia(100%) 
+          saturate(300%) 
+          hue-rotate(-60deg);
 }
 
 .nav-icon:hover img {
-  transform: scale(1.2); /* Увеличиваем иконку при наведении */
+  transform: scale(1.2);
 }
 
-/* Адаптивность */
-@media (max-width: 420px) {
-  .nav-icon img {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-/* Стили для анимации */
+/*=========== АНИМАЦИИ И ЭФФЕКТЫ ===========*/
 lottie-player {
-  width: 70vh; /* Ширина зависит от высоты экрана */
-  height: 70vh; 
-  position: fixed; /* Закрепляем анимацию */
-  bottom: -12%; /* Прижимаем к нижней части экрана */
-  left: 50%; /* Центрируем по горизонтали */
-  transform: translateX(-50%); /* Корректируем центрирование */
-  z-index: 1000; /* Убедимся, что анимация поверх других элементов */
+  width: 70vh;
+  height: 70vh;
+  position: fixed;
+  bottom: -12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
 }
 
-/* Адаптация для маленьких экранов */
-@media (max-width: 600px) {
-  lottie-player {
-    width: 90vh; /* Увеличиваем ширину на маленьких экранах */
-    height: 90vh; /* Увеличиваем высоту на маленьких экранах */
-  }
-}
-
-/* Заставка */
 #splash-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #242424; /* Цвет заставки */
+  background-color: #242424;
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Анимация крепится к нижнему краю */
-  z-index: 10000; /* Заставка поверх всего */
+  align-items: flex-end;
+  z-index: 10000;
   opacity: 1;
-  transition: opacity 1s ease; /* Плавное исчезновение */
+  transition: opacity 1s ease;
 }
 
-/* Скрытие заставки */
 #splash-screen.hide {
   opacity: 0;
-  pointer-events: none; /* Отключаем взаимодействие */
+  pointer-events: none;
 }
 
-/* Все Анимации*/
-/* Анимация появления */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -202,194 +138,401 @@ lottie-player {
     transform: scale(1);
   }
 }
-/*---------------------------------FAQ.html------------------------------------------*/
-/* Стили для страницы FAQ */
-.faq-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Центрируем по оси X */
-  justify-content: center;
-  padding: 25px;
+
+/*=========== АДАПТИВНОСТЬ ===========*/
+@media (max-width: 768px) {
+  body::before {
+    height: 30vh;
+  }
 }
 
-/* Картинка */
+@media (max-width: 600px) {
+  lottie-player {
+    width: 90vh;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 480px) {
+  body::before {
+    height: 25vh;
+  }
+  
+  .nav-icon img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-icon img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/*=========== FAQ.html ===========*/
+
+/*=========== ОСНОВНЫЕ СТИЛИ ===========*/
+.faq-main-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.faq-scroll-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.faq-content {
+  width: calc(100% - 30px);
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/*=========== АВАТАР ===========*/
 .faq-avatar {
-  text-align: center;
-  max-width: 600px; /* Уменьшаем максимальную ширину для мобильных устройств */
   width: 100%;
-  height: auto; /* Автоматическая высота */
-  margin-bottom: 15px; /* Отступ снизу */
+  max-width: 600px;
+  max-height: 300px;
+  height: auto;
+  margin: 18% auto 15px;
   border-radius: 60px;
+  text-align: center;
   filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.6));
+  transition: all 0.4s ease, max-height 0.4s ease;
 }
 
-/* Текстовый блок */
+/*=========== ТЕКСТОВЫЙ БЛОК ===========*/
 .faq-text {
-  width: 100%;
-  max-width: 600px; /* Ширина не превышает ширину картинки */
-  background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
-  border-radius: 15px; /* Скруглённые углы */
-  padding: 15px; /* Отступы внутри блока */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0));
+  width: calc(100% - 30px);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.7));
+  box-sizing: border-box;
 }
 
-/* Заголовок */
 .faq-text h2 {
   margin-top: 0;
   font-size: 24px;
   color: #ffffff;
 }
 
-/* Текст */
 .faq-text p {
   font-size: 16px;
   color: #ffffff;
-  line-height: 1.5;
+  line-height: 1;
 }
 
-/* Список */
+/*=========== ТЕКСТ ПЕСНИ ===========*/
 .faq-text ul {
-  padding-left: 20px;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  list-style: none;
+  text-align: center;
+  color: white;
+  line-height: 1.6;
+  background-color: rgba(32, 23, 35, 0.16);
+  border-radius: 26px 26px 0 0;
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+}
+
+.faq-text ul.show {
+  max-height: calc(100vh - 400px);
+  opacity: 1;
+  padding: 10px 5px;
+  margin: 10px 0;
+  overflow-y: auto;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+  padding-bottom: 30px;
 }
 
 .faq-text ul li {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  font-size: clamp(14px, 3.5vw, 16px);
+  word-break: break-word;
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: calc(var(--i) * 0.05s);
+  opacity: 0;
 }
 
-/* Адаптация для мобильных устройств */
+g {
+  display: block;
+  color: #ff69b4;
+  font-weight: bold;
+  padding: 10px;
+  margin: 5% 0;
+  text-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+}
+
+/*=========== КНОПКА ===========*/
+#toggle-text {
+  padding: 10px 20px;
+  margin: 15px 0;
+  font-size: 14px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#toggle-text:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/*=========== АНИМАЦИИ ===========*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*=========== СОСТОЯНИЯ ===========*/
+.faq-content.hide-content .faq-avatar,
+.faq-content.hide-content .faq-text > h2,
+.faq-content.hide-content .faq-text > p {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-10px);
+}
+
+.faq-content:not(.hide-content) .faq-avatar,
+.faq-content:not(.hide-content) .faq-text > h2,
+.faq-content:not(.hide-content) .faq-text > p {
+  opacity: 1;
+  height: auto;
+  transform: translateY(0);
+}
+
+.faq-content.hide-content .faq-text {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.faq-content.hide-content .faq-avatar {
+  max-height: 0;
+}
+
+.faq-text > h2 {
+  transition-delay: 0.1s;
+}
+
+.faq-text > p {
+  transition-delay: 0.2s;
+}
+
+/*=========== АДАПТИВНОСТЬ ===========*/
 @media (max-width: 768px) {
   .faq-avatar {
-    max-width: 100%; /* Картинка занимает всю ширину экрана */
+    max-width: 100%;
+    margin-top: 25%;
   }
-
+  
   .faq-text {
-    max-width: 100%; /* Текстовый блок занимает всю ширину экрана */
-    padding: 10px; /* Уменьшаем отступы */
+    max-width: 100%;
+    padding: 10px;
   }
-
+  
   .faq-text h2 {
-    font-size: 20px; /* Уменьшаем размер заголовка */
+    font-size: 20px;
   }
-
+  
   .faq-text p {
-    font-size: 14px; /* Уменьшаем размер текста */
+    font-size: 14px;
+  }
+  
+  .faq-text ul.show {
+    max-height: calc(100vh - 350px);
   }
 }
 
-/* Адаптация для очень маленьких экранов */
+@media (max-height: 600px) {
+  .faq-avatar {
+    max-width: 240px;
+    border-radius: 40px;
+  }
+  
+  .faq-scroll-container {
+    padding: 10px;
+  }
+  
+  .faq-content {
+    width: calc(100% - 20px);
+  }
+  
+  .faq-text {
+    padding: 10px;
+  }
+  
+  .faq-text ul.show {
+    max-height: calc(100vh - 400px);
+  }
+}
+
 @media (max-width: 480px) {
+  .faq-avatar {
+    margin-top: 75%;
+  }
+  
   .faq-text h2 {
-    font-size: 18px; /* Ещё меньше размер заголовка */
+    font-size: 18px;
   }
-
+  
   .faq-text p {
-    font-size: 12px; /* Ещё меньше размер текста */
+    font-size: 12px;
   }
-
-  .faq-text ul {
-    padding-left: 15px; /* Уменьшаем отступ списка */
+  
+  .faq-text ul li {
+    font-size: 13px;
+  }
+  
+  #toggle-text {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }
 
-/*-----------------------------------INDEX.html----------------------------*/
-/* Стили для главной страницы */
+/*=========== INDEX.html ===========*/
+
+/*=========== ОСНОВНОЙ КОНТЕЙНЕР ===========*/
 .index-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем по оси X */
-  justify-content: center; /* Центрируем по оси Y */
-  min-height: 100vh; /* Занимаем всю высоту экрана */
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   width: 100%;
   margin: 0 auto;
-  padding: 0px;
+  padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
-/* Контейнер для обложки и плеера */
+/*=========== КОНТЕЙНЕР АЛЬБОМА ===========*/
 .album-container {
-  text-align: center; /* Центрируем содержимое */
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем по горизонтали */
-  justify-content: center; /* Центрируем по вертикали */
-  max-width: 800px; /* Ограничиваем ширину */
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
   width: 100%;
 }
 
-/* Обложка альбома */
+/*=========== ОБЛОЖКА АЛЬБОМА ===========*/
 .album-cover {
   width: 100%;
-  max-width: 400px; /* Максимальная ширина обложки */
-  height: auto; /* Автоматическая высота */
-  border-radius: 15px; /* Скруглённые углы */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
+  max-width: 400px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Плеер */
+/*=========== ПЛЕЕР ===========*/
 .player {
-  margin-top: 20px; /* Отступ сверху */
+  margin-top: 20px;
 }
 
 .player iframe {
   width: 100%;
-  max-width: 360px; /* Ширина плеера */
-  height: 100px; /* Высота плеера */
-  border: none; /* Убираем рамку */
-  border-radius: 12px; /* Скруглённые углы */
+  max-width: 360px;
+  height: 100px;
+  border: none;
+  border-radius: 12px;
 }
 
-/* Адаптация для мобильных устройств */
-@media (max-width: 500px) {
-  .album-cover {
-    max-width: 360px; /* Уменьшаем ширину обложки */
-  }
-
-  .player iframe {
-    max-width: 85%; /* Плеер занимает всю ширину */
-  }
-}
-
-@media (max-width: 460px) {
-  .album-cover {
-    max-width: 300px; /* Ещё меньше ширина обложки */
-  }
-
-  .player iframe {
-    height: 100px; /* Уменьшаем высоту плеера */
-  }
-}
-
-/* Стили для контейнера PLAY/PAUSE */
+/*=========== КНОПКИ ВОСПРОИЗВЕДЕНИЯ ===========*/
 .play-button {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-top: 20px; /* Отступ сверху */
+  margin-top: 20px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
 }
 
-/* Иконки */
 .play-icon,
 .pause-icon {
   width: 60px;
   height: 60px;
-  filter: brightness(0) invert(1) sepia(1) saturate(8200%) hue-rotate(-35deg); /* Перекрашиваем в жёлтый */
+  filter: brightness(0) 
+          invert(1) 
+          sepia(1) 
+          saturate(8200%) 
+          hue-rotate(-35deg) 
+          drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
   transition: opacity 0.3s ease;
 }
 
-/*-------------------------------MUSIC.html--------------------------------*/
-/* Стили для заголовка и описания */
+/*=========== АДАПТИВНОСТЬ ===========*/
+@media (max-width: 500px) {
+  .album-cover {
+    max-width: 360px;
+  }
+  
+  .player iframe {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 460px) {
+  .album-cover {
+    max-width: 300px;
+  }
+  
+  .player iframe {
+    height: 100px;
+  }
+}
+
+/*=========== MUSIC.html ===========*/
+
 .index-music-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем по оси X */
-  justify-content: flex-start; /* Начинаем с верхней части */
-  flex: 1; /* Занимаем оставшуюся высоту */
-  padding: 0vh;
-  box-sizing: border-box; /* Учитываем padding в размерах */
-  overflow-y: auto; /* Добавляем вертикальный скролл, если контент не помещается */
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -400,18 +543,17 @@ lottie-player {
 
 .music-header h1 {
   font-size: 36px;
-  color: #ffffff;
+  color: #fff;
   margin-bottom: 10px;
 }
 
 .music-header p {
   font-size: 16px;
-  color: #ffffff;
+  color: #fff;
   opacity: 0.8;
 }
 
-/* Общие стили для всех устройств */
-/* Контейнер для слайдера */
+/*=========== Слайдер ===========*/
 .slider-container {
   display: flex;
   align-items: center;
@@ -422,20 +564,17 @@ lottie-player {
   margin: 0 auto;
 }
 
-/* Область слайдера */
 .slider {
   width: 300px;
   overflow: visible;
   position: relative;
 }
 
-/* Дорожка слайдера */
 .slider-track {
   display: flex;
   transition: transform 0.5s ease;
 }
 
-/* Элемент слайдера */
 .slider-item {
   min-width: 300px;
   text-align: center;
@@ -450,7 +589,7 @@ lottie-player {
   border-radius: 10px;
 }
 
-/* Кнопки слайдера */
+/*=========== Навигационные стрелки ===========*/
 .slider-button {
   background: none;
   border: none;
@@ -476,125 +615,39 @@ lottie-player {
   filter: brightness(0) invert(1);
 }
 
-/* Адаптация для Samsung A51/71 (412x914) */
+/*=========== Адаптация под устройства ===========*/
 @media (max-width: 412px) {
-  .index-music-container {
-    padding: 7vh;
-  }
-  
-  .music-header {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .music-header h1 {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  
-  .music-header p {
-    font-size: 14px;
-    color: #ffffff;
-    opacity: 0.8;
-  }
-  
-  .slider {
-    width: 250px;
-  }
-
-  .slider-item {
-    min-width: 250px;
-  }
-
-  .slider-button.left-button {
-    left: -40px;
-  }
-
-  .slider-button.right-button {
-    right: -40px;
-  }
-
-  .slider-button img {
-    width: 20px;
-    height: 20px;
-  }
+  .index-music-container { padding: 7vh; }
+  .music-header h1 { font-size: 24px; }
+  .music-header p { font-size: 14px; }
+  .slider { width: 250px; }
+  .slider-item { min-width: 250px; }
+  .slider-button.left-button { left: -40px; }
+  .slider-button.right-button { right: -40px; }
+  .slider-button img { width: 20px; height: 20px; }
 }
 
-/* Адаптация для iPhone SE (375x667) */
 @media (max-width: 376px) {
-  .slider {
-    width: 200px;
-  }
-
-  .index-music-container {
-    padding: 1.5vh;
-  }
-
-  .music-header {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .music-header h1 {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  
-  .music-header p {
-    font-size: 14px;
-    color: #ffffff;
-    opacity: 0.8;
-  }
-  .slider-item {
-    min-width: 200px;
-  }
-
-  .slider-button.left-button {
-    left: -30px;
-  }
-
-  .slider-button.right-button {
-    right: -30px;
-  }
-
-  .slider-button img {
-    width: 18px;
-    height: 18px;
-  }
+  .index-music-container { padding: 1.5vh; }
+  .slider { width: 200px; }
+  .slider-item { min-width: 200px; }
+  .slider-button.left-button { left: -30px; }
+  .slider-button.right-button { right: -30px; }
+  .slider-button img { width: 18px; height: 18px; }
+  .faq-avatar { margin-top: 64%; }
 }
 
-/* Адаптация для маленьких экранов */
 @media (max-height: 667px) {
-  .index-container {
-    padding: 10px; /* Уменьшаем отступы */
-  }
-
-  .slider {
-    width: 200px; /* Уменьшаем ширину слайдера */
-  }
-
-  .slider-item {
-    min-width: 200px; /* Уменьшаем ширину слайдов */
-  }
-
-  .slider-button.left-button {
-    left: -20px; /* Уменьшаем отступ для стрелочек */
-  }
-
-  .slider-button.right-button {
-    right: -20px; /* Уменьшаем отступ для стрелочек */
-  }
-
-  .slider-button img {
-    width: 16px; /* Уменьшаем размер иконок */
-    height: 16px;
-  }
+  .index-container { padding: 10px; }
+  .slider { width: 200px; }
+  .slider-item { min-width: 200px; }
+  .slider-button.left-button { left: -20px; }
+  .slider-button.right-button { right: -20px; }
+  .slider-button img { width: 16px; height: 16px; }
 }
 
-/*---------------------------------------------------------------------------------------*/
-/* Скрываем элементы интерфейса на мобильных устройствах */
+/*=========== Скрываем элементы на МУ ===========*/
+
 @media (max-width: 768px) {
   body {
     overflow: hidden;
@@ -608,7 +661,7 @@ lottie-player {
   }
 }
 
-/*--------------------------------FULLSCREEN-------------------------------------------------------*/
+/*=========== FULLSCREEN ===========*/
 
 #fullscreen-icon {
   position: fixed;
@@ -619,30 +672,17 @@ lottie-player {
   text-align: center;
   border-radius: 50%;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg);
+  filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg) drop-shadow(0 2px 1px rgba(20, 8, 21, 0.85));
   transition: all 0.3s;
-  
-  /* Запрещаем выделение */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
-  
-  /* Запрещаем перетаскивание */
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
 }
 
 #fullscreen-icon * {
-  /* Применяем те же свойства ко всем дочерним элементам */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   pointer-events: none;
 }
 
@@ -655,11 +695,12 @@ lottie-player {
 #fullscreen-icon.active {
   opacity: 0.4;
   transform: scale(1.1);
+  filter: saturate(0) invert(1) brightness(0.2);
 }
 
 #fullscreen-icon.active .fullscreen-text {
-  opacity: 0; /* Полностью прозрачный текст в активном состоянии */
-  visibility: hidden; /* Дополнительно скрываем текст */
+  opacity: 0;
+  visibility: hidden;
 }
 
 .fullscreen-wrapper {
@@ -676,22 +717,50 @@ lottie-player {
   font-size: 10px;
   line-height: 1.2;
   text-shadow: 0 0 10px #ff69b4;
-  /*filter: drop-shadow(0 1px 4px rgba(255, 105, 180, 1));*/
   width: 100%;
   max-width: 60px;
-  opacity: 1; /* Изначально текст видим */
+  opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s, visibility 0.3s; /* Плавное исчезновение */
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 .fullscreen-text span {
   display: block;
 }
 
-/* Фикс для iOS */
+/*=========== Фикс для iOS ===========*/
 @supports (-webkit-touch-callout: none) {
   body {
     min-height: -webkit-fill-available;
   }
 }
 
+/*=========== Уведомление ===========*/
+
+.top-notification {
+  position: fixed;
+  top: -60px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 400px;
+  padding: 12px 20px;
+  background-color: rgba(160, 111, 157, 0.9);
+  color: white;
+  text-align: center;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  font-size: 16px;
+  transition: top 0.5s ease-in-out;
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  opacity: 0;
+  transition: top 0.5s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.top-notification.show {
+  top: 0;
+  opacity: 1;
+}
