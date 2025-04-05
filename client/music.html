@@ -37,7 +37,7 @@
   <main class="index-music-container">
     <div class="music-header">
       <h1>Альбомы</h1>
-      <p>Тут вы найдёте все альбомы и релизы, а также ссылки на Youtube Music</p>
+      <p>Тут вы найдёте все альбомы и релизы, а также ссылки на Яндекс Музыку<br>(просто нажми на обложку)</p>
     </div>
 
     <div class="slider-container">
@@ -78,6 +78,9 @@
 
       <div class="slider">
         <div class="slider-track">
+          <div class="slider-item">
+            <img src="assets/images/only.png" alt="Only">
+          </div>
           <div class="slider-item">
             <img src="assets/images/to_pieces.png" alt="To Pieces">
           </div>
@@ -127,7 +130,35 @@
       </a>
     </div>
   </nav>
-
+  <script>
+    document.querySelectorAll('.slider-item').forEach((item, index) => {
+  item.addEventListener('click', () => {
+    if (item.classList.contains('active')) { // Проверяем активен ли слайд
+      const links = [
+            // albums
+            'https://music.yandex.ru/album/29925083', // It Too Much
+            'https://music.yandex.ru/album/31200140', // ITM
+            'https://music.yandex.ru/album/28294069', // Moral Violence
+            'https://music.yandex.ru/album/33552411', // Freedom IRL Exists
+            // singles
+            'https://music.yandex.ru/artist/17363429', // Only
+            'https://music.yandex.ru/album/35392143/', // To Pieces
+            'https://music.yandex.ru/album/32024660', // Deficit / Дефицт
+            'https://music.yandex.ru/album/30641993', // Now
+            'https://music.yandex.ru/album/31350584', // Later
+            'https://music.yandex.ru/album/28929147', // Happy New Year Listeners
+            'https://music.yandex.ru/album/26989689', // Handpan Song from Non-Existence
+            'https://music.yandex.ru/album/28749552', // Behind Heart (2023 Remastered)
+            'https://music.yandex.ru/album/26120681', // You Know / Ты же знаешь
+            'https://music.yandex.ru/album/25446408', // Grace
+          ];
+      if (links[index]) {
+        window.location.href = links[index];
+      }
+    }
+  });
+});
+  </script>
   <script src="js/slider.js"></script>
   <script src="js/fullscreen.js" defer></script>
 </body>

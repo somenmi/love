@@ -1,51 +1,40 @@
-// Функция для инициализации слайдера
 function initSlider(sliderContainer) {
   const sliderTrack = sliderContainer.querySelector(".slider-track");
   const leftButton = sliderContainer.querySelector(".left-button");
   const rightButton = sliderContainer.querySelector(".right-button");
+  let currentIndex = 0;
+  const totalSlides = sliderContainer.querySelectorAll(".slider-item").length;
 
-  let currentIndex = 0; // Текущий индекс слайда
-  const totalSlides = sliderContainer.querySelectorAll(".slider-item").length; // Общее количество слайдов
-
-  // Функция для переключения слайдов
   function moveSlider(direction) {
-    const sliderWidth = sliderContainer.querySelector(".slider-item").clientWidth; // Ширина одного слайда
+    const sliderWidth = sliderContainer.querySelector(".slider-item").clientWidth;
 
     if (direction === "left") {
-      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Бесконечный цикл влево
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
     } else if (direction === "right") {
-      currentIndex = (currentIndex + 1) % totalSlides; // Бесконечный цикл вправо
+      currentIndex = (currentIndex + 1) % totalSlides;
     }
 
-    // Перемещаем слайдер
     sliderTrack.style.transform = `translateX(-${currentIndex * sliderWidth}px)`;
-
-    // Анимация появления следующего слайда
     animateSlide();
   }
 
-  // Функция для анимации слайда
   function animateSlide() {
     const slides = sliderContainer.querySelectorAll(".slider-item");
-
+    
     slides.forEach((slide, index) => {
+      slide.classList.remove("active");
+      
       if (index === currentIndex) {
-        // Текущий слайд: плавно появляется и увеличивается
-        slide.style.opacity = "1";
-        slide.style.transform = "scale(1)";
-      } else {
-        // Остальные слайды: прозрачные и уменьшенные
-        slide.style.opacity = "0";
-        slide.style.transform = "scale(0.5)";
+        slide.classList.add("active");
       }
     });
   }
 
-  // Обработчики для кнопок
+  // Обработчики событий
   leftButton.addEventListener("click", () => moveSlider("left"));
   rightButton.addEventListener("click", () => moveSlider("right"));
 
-  // Обработчик для свайпа (на мобильных устройствах)
+  // Свайп для мобильных устройств
   let startX = 0;
   let endX = 0;
 
@@ -60,17 +49,31 @@ function initSlider(sliderContainer) {
 
   function handleSwipe() {
     if (startX - endX > 50) {
-      moveSlider("right"); // Свайп вправо
+      moveSlider("right");
     } else if (endX - startX > 50) {
-      moveSlider("left"); // Свайп влево
+      moveSlider("left");
     }
   }
 
-  // Инициализация: показываем первый слайд
+  // Инициализация
   animateSlide();
 }
 
-// Инициализация всех слайдеров на странице
-document.querySelectorAll(".slider-container").forEach((sliderContainer) => {
-  initSlider(sliderContainer);
+// Инициализация всех слайдеров
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".slider-container").forEach((sliderContainer) => {
+    initSlider(sliderContainer);
+  });
+});
+
+// Запрет перетаскивания
+document.querySelectorAll('.slider-item img').forEach(img => {
+  img.addEventListener('dragstart', (e) => {
+    e.preventDefault();
+  });
+});
+
+// Запрет контекстного меню (ПКМ)
+document.querySelector('.slider').addEventListener('contextmenu', (e) => {
+  e.preventDefault();
 });
