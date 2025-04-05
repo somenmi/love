@@ -9,6 +9,10 @@ body {
   background-color: rgb(0, 0, 0);
 }
 
+/* {
+  outline: 1px solid red !important;
+} /*...*/
+
 /*=========== ФОНОВЫЕ ЭЛЕМЕНТЫ ===========*/
 .background {
   position: fixed;
@@ -594,7 +598,7 @@ g {
 
 .music-header {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .music-header h1 {
@@ -688,19 +692,19 @@ g {
 }
 
 /*=========== Адаптация под устройства ===========*/
-@media (max-width: 412px) {
-  .index-music-container { padding: 7vh; }
+@media (max-width: 512px) {
+  .index-music-container { padding: 2vh; }
   .music-header h1 { font-size: 24px; }
   .music-header p { font-size: 14px; }
   .slider { width: 250px; }
   .slider-item { min-width: 250px; }
-  .slider-button.left-button { left: -40px; }
-  .slider-button.right-button { right: -40px; }
+  .slider-button.left-button { left: -50px; }
+  .slider-button.right-button { right: -50px; }
   .slider-button img { width: 20px; height: 20px; }
 }
 
 @media (max-width: 376px) {
-  .index-music-container { padding: 1.5vh; }
+  .index-music-container { padding: 1vh; }
   .slider { width: 200px; }
   .slider-item { min-width: 200px; }
   .slider-button.left-button { left: -30px; }
@@ -745,7 +749,7 @@ g {
   text-align: center;
   border-radius: 50%;
   padding: 10px;
-  filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(300%) hue-rotate(-60deg) drop-shadow(0 2px 1px rgba(20, 8, 21, 0.85));
+  filter: saturate(100%) invert(50%) sepia(100%) saturate(500%) hue-rotate(-60deg) drop-shadow(0 2px 1px rgba(20, 8, 21, 0.85));
   transition: all 0.3s;
   user-select: none;
   -webkit-user-select: none;
@@ -789,7 +793,7 @@ g {
   color: white;
   font-size: 10px;
   line-height: 1.2;
-  text-shadow: 0 0 10px #ff69b4;
+  text-shadow: 0 0 10px rgb(255, 129, 192);
   width: 100%;
   max-width: 60px;
   opacity: 1;
