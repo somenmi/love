@@ -152,7 +152,14 @@
     </div>
   </nav>
 
+  <div id="top-notification" class="top-notification">
+    👈 Чтобы было красиво,<br>жми на иконку
+  </div>
+
   <script src="js/fullscreen.js" defer></script>
+  <script src="js/nav.js"></script>
+  <script src="js/faq.js"></script>
+  <script src="js/notification.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const toggleButton = document.getElementById("toggle-text");
@@ -174,12 +181,17 @@
           toggleButton.textContent = "ТЕКСТ ПЕСНИ";
         } else {
           contentContainer.classList.add("hide-content");
+          textContainer.classList.remove("hidden");
           setTimeout(() => {
-            textContainer.classList.remove("hidden");
+            textContainer.classList.add("show");
+            // Восстанавливаем защиту после анимации
             setTimeout(() => {
-              textContainer.classList.add("show");
-              textContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 10);
+              const allTextElements = textContainer.querySelectorAll('*');
+              allTextElements.forEach(el => {
+                el.style.userSelect = 'text';
+                el.style.webkitUserSelect = 'text';
+              });
+            }, 50);
           }, 10);
           toggleButton.textContent = "СКРЫТЬ";
         }

@@ -1,3 +1,7 @@
+/**
+ * Инициализация слайдера
+ * @param {HTMLElement} sliderContainer - Контейнер слайдера
+ */
 function initSlider(sliderContainer) {
   const sliderTrack = sliderContainer.querySelector(".slider-track");
   const leftButton = sliderContainer.querySelector(".left-button");
@@ -5,6 +9,10 @@ function initSlider(sliderContainer) {
   let currentIndex = 0;
   const totalSlides = sliderContainer.querySelectorAll(".slider-item").length;
 
+  /**
+   * Перемещает слайдер в указанном направлении
+   * @param {string} direction - Направление ('left' или 'right')
+   */
   function moveSlider(direction) {
     const sliderWidth = sliderContainer.querySelector(".slider-item").clientWidth;
 
@@ -20,21 +28,19 @@ function initSlider(sliderContainer) {
 
   function animateSlide() {
     const slides = sliderContainer.querySelectorAll(".slider-item");
-    
+
     slides.forEach((slide, index) => {
       slide.classList.remove("active");
-      
+
       if (index === currentIndex) {
         slide.classList.add("active");
       }
     });
   }
 
-  // Обработчики событий
   leftButton.addEventListener("click", () => moveSlider("left"));
   rightButton.addEventListener("click", () => moveSlider("right"));
 
-  // Свайп для мобильных устройств
   let startX = 0;
   let endX = 0;
 
@@ -55,25 +61,31 @@ function initSlider(sliderContainer) {
     }
   }
 
-  // Инициализация
+  function protectSliderElements() {
+    sliderContainer.querySelectorAll('img').forEach(img => {
+      img.addEventListener('dragstart', (e) => e.preventDefault());
+      img.setAttribute('draggable', 'false');
+    });
+
+    sliderContainer.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    sliderContainer.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
+  }
+
   animateSlide();
+  protectSliderElements();
 }
 
-// Инициализация всех слайдеров
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".slider-container").forEach((sliderContainer) => {
     initSlider(sliderContainer);
   });
-});
 
-// Запрет перетаскивания
-document.querySelectorAll('.slider-item img').forEach(img => {
-  img.addEventListener('dragstart', (e) => {
-    e.preventDefault();
+  document.querySelectorAll('.slider').forEach(slider => {
+    slider.addEventListener('contextmenu', (e) => e.preventDefault());
   });
-});
-
-// Запрет контекстного меню (ПКМ)
-document.querySelector('.slider').addEventListener('contextmenu', (e) => {
-  e.preventDefault();
 });

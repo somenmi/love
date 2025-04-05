@@ -130,11 +130,16 @@
       </a>
     </div>
   </nav>
+
+  <div id="top-notification" class="top-notification">
+    👈 Чтобы было красиво,<br>жми на иконку
+  </div>
+
   <script>
     document.querySelectorAll('.slider-item').forEach((item, index) => {
-  item.addEventListener('click', () => {
-    if (item.classList.contains('active')) { // Проверяем активен ли слайд
-      const links = [
+      item.addEventListener('click', () => {
+        if (item.classList.contains('active')) { // Проверяем активен ли слайд
+          const links = [
             // albums
             'https://music.yandex.ru/album/29925083', // It Too Much
             'https://music.yandex.ru/album/31200140', // ITM
@@ -152,15 +157,17 @@
             'https://music.yandex.ru/album/26120681', // You Know / Ты же знаешь
             'https://music.yandex.ru/album/25446408', // Grace
           ];
-      if (links[index]) {
-        window.location.href = links[index];
-      }
-    }
-  });
-});
+          if (links[index]) {
+            window.location.href = links[index];
+          }
+        }
+      });
+    });
   </script>
+  <script src="js/notification.js"></script>
   <script src="js/slider.js"></script>
   <script src="js/fullscreen.js" defer></script>
+  <script src="js/nav.js"></script>
 </body>
 
 </html>

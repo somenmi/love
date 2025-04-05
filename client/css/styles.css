@@ -516,6 +516,9 @@ g {
   height: auto;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: auto;
 }
 
 /*=========== ПЛЕЕР ===========*/
@@ -834,4 +837,55 @@ g {
 .top-notification.show {
   top: 0;
   opacity: 1;
+}
+
+/*=========== sec-ty ===========*/
+
+body, html {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#toggle-text,
+.faq-text ul.show,
+.faq-text ul.show * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.bottom-nav,
+.nav-icons-container,
+.nav-icon,
+.nav-icon img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.nav-icon {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.nav-icon:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.slider-container,
+.slider-track,
+.slider-item,
+.slider-item img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-drag: none;
+}
+
+.slider-item.active,
+.left-button,
+.right-button {
+  pointer-events: auto;
 }
