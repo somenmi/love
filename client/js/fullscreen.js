@@ -18,8 +18,10 @@ function setupFullscreen() {
   function updateIconState() {
     if (isFullscreen()) {
       fullscreenIcon.classList.add('active');
+      localStorage.setItem("fullscreen", "true");
     } else {
       fullscreenIcon.classList.remove('active');
+      localStorage.setItem("fullscreen", "false");
     }
   }
 
@@ -33,7 +35,6 @@ function setupFullscreen() {
       } else if (element.mozRequestFullScreen) {
         await element.mozRequestFullScreen();
       }
-      updateIconState();
     } catch (err) {
       console.error('Fullscreen error:', err);
     }
@@ -48,7 +49,6 @@ function setupFullscreen() {
       } else if (document.mozCancelFullScreen) {
         await document.mozCancelFullScreen();
       }
-      updateIconState();
     } catch (err) {
       console.error('Exit fullscreen error:', err);
     }
@@ -78,8 +78,9 @@ function setupFullscreen() {
   document.addEventListener('fullscreenchange', updateIconState);
   document.addEventListener('webkitfullscreenchange', updateIconState);
   document.addEventListener('mozfullscreenchange', updateIconState);
+
+  // Инициализация состояния
+  updateIconState();
 }
 
 document.addEventListener('DOMContentLoaded', setupFullscreen);
-
-localStorage.setItem("fullscreen", isFullscreen ? "true" : "false");

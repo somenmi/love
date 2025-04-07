@@ -7,6 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <title>Only — AWALORES</title>
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/favicon/favicon-32x32.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon/favicon-180x180.png">
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -26,15 +29,17 @@
           "url": "https://awalores-only.vercel.app/"
         }
     </script>
+    <link rel="stylesheet" href="css/styles.css">
     <script>
         if (!localStorage.getItem("splashShown")) {
             window.location.href = "splash.html";
         }
     </script>
-    <link rel="stylesheet" href="css/styles.css">
+
 </head>
 
 <body>
+
     <div id="fullscreen-icon">
         <div class="fullscreen-wrapper">
             <img src="assets/icons/fullscreen.svg" alt="FullScreen">
@@ -47,7 +52,7 @@
         </div>
     </div>
 
-    <div class="background" style="filter: sepia(0.5) hue-rotate(-50deg) brightness(0.8)"></div>
+    <div class="background-main"></div> <!--  style="filter: sepia(0.5) hue-rotate(-50deg) brightness(0.8)" -->
 
     <main class="index-container">
         <div class="album-container">
@@ -83,8 +88,10 @@
         👈 Чтобы было красиво,<br>жми на иконку
     </div>
 
+    <script src="js/sparkles/sparkle-2.js"></script>
     <script src="js/notification.js"></script>
     <script src="js/audio-player.js"></script>
+<!--     <script src="js/magic-bg.js" defer></script> -->
     <script src="js/fullscreen.js" defer></script>
     <script src="js/nav.js"></script>
 </body>
