@@ -2,6 +2,14 @@
     "version": 2,
     "routes": [
         {
+            "src": "/api/(.*)",
+            "dest": "/api/$1"
+        },
+        {
+            "src": "/assets/(.*)",
+            "dest": "/client/assets/$1"
+        },
+        {
             "src": "/sitemap.xml",
             "dest": "/sitemap.xml",
             "headers": {
@@ -14,10 +22,6 @@
             "headers": {
                 "Content-Type": "text/plain"
             }
-        },
-        {
-            "src": "/assets/(.*)",
-            "dest": "/client/assets/$1"
         },
         {
             "src": "/(.*)",
