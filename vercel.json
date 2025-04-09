@@ -1,25 +1,5 @@
 {
     "version": 2,
-    "headers": [
-        {
-            "source": "/sitemap.xml",
-            "headers": [
-                {
-                    "key": "Content-Type",
-                    "value": "application/xml"
-                }
-            ]
-        },
-        {
-            "source": "/robots.txt",
-            "headers": [
-                {
-                    "key": "Content-Type",
-                    "value": "text/plain"
-                }
-            ]
-        }
-    ],
     "routes": [
         {
             "src": "/api/(.*)",
@@ -31,19 +11,21 @@
         },
         {
             "src": "/sitemap.xml",
-            "dest": "/sitemap.xml.txt",
+            "dest": "/sitemap.xml",
             "headers": {
                 "Content-Type": "application/xml"
             }
         },
         {
-            "src": "/(.*)",
-            "dest": "/client/$1"
+            "src": "/robots.txt",
+            "dest": "/robots.txt",
+            "headers": {
+                "Content-Type": "text/plain"
+            }
         },
         {
             "src": "/(.*)",
-            "dest": "/client/index.html",
-            "status": 200
+            "dest": "/client/$1"
         }
     ]
 }
