@@ -1,3 +1,5 @@
+
+
 function setupFullscreen() {
   const fullscreenIcon = document.getElementById('fullscreen-icon');
   

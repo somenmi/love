@@ -30,13 +30,6 @@
         }
     </script>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        :root {
-            --sparkle-speed: 1;
-            --sparkle-density: 1;
-            --sparkle-intensity: 1;
-        }
-        </style>
     <script>
         if (!localStorage.getItem("splashShown")) {
             window.location.href = "splash.html";
@@ -46,14 +39,7 @@
 </head>
 
 <body>
-    <style>
-        :root {
-            --sparkle-speed: 1;
-            --sparkle-density: 1;
-            --sparkle-intensity: 1;
-        }
-        </style>
-    <div id="fullscreen-icon">
+    <div id="fullscreen-icon" style="filter: invert(50%) sepia(100%) saturate(400%) hue-rotate(-20deg);">
         <div class="fullscreen-wrapper">
             <img src="assets/icons/fullscreen.svg" alt="FullScreen">
             <div class="fullscreen-text">
@@ -101,10 +87,9 @@
         👈 Чтобы было красиво,<br>жми на иконку
     </div>
 
-    <script src="js/sparkles/sparkle-2.js"></script>
     <script src="js/notification.js"></script>
     <script src="js/audio-player.js"></script>
-<!--     <script src="js/magic-bg.js" defer></script> -->
+    <script src="js/magic-bg.js" defer></script>
     <script src="js/fullscreen.js" defer></script>
     <script src="js/nav.js"></script>
 </body>

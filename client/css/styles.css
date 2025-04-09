@@ -40,6 +40,19 @@ body {
   z-index: -1;
 }
 
+.background-music {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/background-music.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -130,7 +143,7 @@ lottie-player {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #242424;
+  background-color: #9e5c1a;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -535,6 +548,7 @@ g {
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: auto;
+  opacity: 90%;
 }
 
 /*=========== ПЛЕЕР ===========*/
@@ -762,7 +776,7 @@ g {
   text-align: center;
   border-radius: 50%;
   padding: 10px;
-  filter: saturate(100%) invert(50%) sepia(100%) saturate(500%) hue-rotate(-60deg) drop-shadow(0 2px 1px rgba(20, 8, 21, 0.85));
+  filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(-60deg) drop-shadow(0 2px 1px rgba(20, 8, 21, 0.85));
   transition: all 0.3s;
   user-select: none;
   -webkit-user-select: none;
@@ -915,50 +929,85 @@ body, html {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 5000;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  /* Оптимизация рендеринга */
   contain: strict;
-  will-change: transform;
 }
 
 .bubble {
   position: absolute;
-  border-radius: 50%;
-  background: hsla(285, 50%, 80%);
-  /* Минимальная анимация */
   animation: float-up linear infinite;
-  /* Критически важные свойства */
   will-change: transform, opacity;
   backface-visibility: hidden;
-  /* Размеры через CSS-переменные */
   width: var(--size);
   height: var(--size);
   left: var(--start-x);
-  /* Начальная позиция */
-  transform: translateY(100vh) translateX(0);
+  transform: 
+    translateY(var(--start-y)) 
+    translateX(-50%)
+    rotate(var(--rotation));
+  transform-origin: center;
+  transition: opacity 0.4s ease-in-out;
+  background-image: url('../assets/icons/heart.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: sepia(80%) saturate(300%);
+  
 }
 
 @keyframes float-up {
   to {
-    transform: translateY(-100vh) translateX(var(--x-drift));
+    transform: translateY(calc(var(--start-y) - 120vh)) translateX(var(--x-drift));
     opacity: 0;
   }
 }
 
-/*== ОФОРМЛЕНИЕ ==*/
-
-#sparkle-canvas {
-  filter:   
-  contrast(0.95)
-  sepia(100%) 
-  brightness(1.05)
-  ;
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-:root {
-  --sparkle-speed: 1;
-  --sparkle-density: 1;
-  --sparkle-intensity: 1;
+.raindrop {
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(180, 200, 255, 0.7));
+  width: 1px;
+  animation: falling linear forwards;
+  transform-origin: top;
 }
+
+@keyframes falling {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.raindrop::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -1px;
+  width: 3px;
+  height: 2px;
+  background: rgba(180, 200, 255, 0.6);
+  border-radius: 50%;
+  animation: splash 0.4s ease-out forwards;
+  animation-delay: calc(var(--animation-duration) - 0.4s);
+  opacity: 0;
+}
+
+@keyframes splash {
+  to {
+    transform: scale(6);
+    opacity: 0;
+  }
+}
+

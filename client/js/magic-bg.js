@@ -5,24 +5,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const CONFIG = {
     DESKTOP: {
-      COUNT: 120,       // Количество пузырей на ПК
-      SIZE_MIN: 2,      // Минимальный размер (px)
-      SIZE_MAX: 4       // Максимальный размер
+      COUNT: 60,
+      SIZE_MIN: 6,
+      SIZE_MAX: 26,
+      ROTATION_MIN: -15, // Минимальный угол поворота (градусы)
+      ROTATION_MAX: 15   // Максимальный угол поворота
     },
     MOBILE: {
-      COUNT: 50,        // Количество на мобильных
-      SIZE_MIN: 1,
-      SIZE_MAX: 4
+      COUNT: 20,
+      SIZE_MIN: 4,
+      SIZE_MAX: 20,
+      ROTATION_MIN: -15,
+      ROTATION_MAX: 15
     },
-    ANIMATION_DURATION_MIN: 15,  // Минимальная длительность (сек)
-    ANIMATION_DURATION_MAX: 40    // Максимальная длительность
+    ANIMATION_DURATION_MIN: 6,
+    ANIMATION_DURATION_MAX: 9
   };
 
   const isMobile = window.innerWidth < 768;
-  const { COUNT, SIZE_MIN, SIZE_MAX } = isMobile ? CONFIG.MOBILE : CONFIG.DESKTOP;
+  const { COUNT, SIZE_MIN, SIZE_MAX, ROTATION_MIN, ROTATION_MAX } = isMobile ? CONFIG.MOBILE : CONFIG.DESKTOP;
 
-  const bubblesFragment = document.createDocumentFragment();
-  
   for (let i = 0; i < COUNT; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -31,23 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const duration = CONFIG.ANIMATION_DURATION_MIN + 
                      Math.random() * (CONFIG.ANIMATION_DURATION_MAX - CONFIG.ANIMATION_DURATION_MIN);
     const startX = Math.random() * 100;
+    const startY = Math.random() * 100;
     const xDrift = -5 + Math.random() * 10;
+    const rotation = ROTATION_MIN + Math.random() * (ROTATION_MAX - ROTATION_MIN);
 
     bubble.style.cssText = `
       --size: ${size}px;
       --start-x: ${startX}vw;
+      --start-y: ${startY}vh;
       --x-drift: ${xDrift}vw;
+      --rotation: ${rotation}deg;
       animation-duration: ${duration}s;
-      animation-delay: ${Math.random() * 10}s;
-      opacity: ${0.3 + Math.random() * 0.5};
+      animation-delay: 0s;
+      opacity: ${0.4 + Math.random() * 0.6};
     `;
 
-    bubblesFragment.appendChild(bubble);
-  }
-
-  container.appendChild(bubblesFragment);
-
-  if (isMobile) {
-    container.style.perspective = '1000px';
+    container.appendChild(bubble);
   }
 });

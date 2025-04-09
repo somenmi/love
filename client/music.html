@@ -20,10 +20,80 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const rainContainer = document.createElement('div');
+      rainContainer.className = 'rain-container';
+      document.body.prepend(rainContainer);
+
+      const CONFIG = {
+        DESKTOP: {
+          COUNT: 70, // Одновременно видимых капель
+          LENGTH_MIN: 20,
+          LENGTH_MAX: 40,
+          SPEED_MIN: 1,
+          SPEED_MAX: 3,
+          SPAWN_RATE: 50 // Новые капли каждые 50мс
+        },
+        MOBILE: {
+          COUNT: 30,
+          LENGTH_MIN: 16,
+          LENGTH_MAX: 40,
+          SPEED_MIN: 1,
+          SPEED_MAX: 2,
+          SPAWN_RATE: 80
+        }
+      };
+
+      const isMobile = window.innerWidth < 768;
+      const config = isMobile ? CONFIG.MOBILE : CONFIG.DESKTOP;
+
+      // Функция создания одной капли
+      function createRaindrop() {
+        const raindrop = document.createElement('div');
+        raindrop.className = 'raindrop';
+
+        const length = config.LENGTH_MIN + Math.random() * (config.LENGTH_MAX - config.LENGTH_MIN);
+        const speed = config.SPEED_MIN + Math.random() * (config.SPEED_MAX - config.SPEED_MIN);
+        const startX = Math.random() * 100;
+        const startY = -10 - Math.random() * 20;
+        const opacity = 0.8;
+
+        raindrop.style.cssText = `
+      height: ${length}px;
+      left: ${startX}vw;
+      top: ${startY}vh;
+      animation-duration: ${speed}s;
+      opacity: ${opacity};
+      --animation-duration: ${speed}s;
+    `;
+
+        rainContainer.appendChild(raindrop);
+
+        // Удаляем каплю после завершения анимации
+        setTimeout(() => {
+          raindrop.remove();
+        }, speed * 1000);
+      }
+
+      // Создаём начальные капли
+      for (let i = 0; i < config.COUNT; i++) {
+        setTimeout(createRaindrop, Math.random() * 2000);
+      }
+
+      // Запускаем непрерывное создание новых капель
+      const rainInterval = setInterval(createRaindrop, config.SPAWN_RATE);
+
+      // Очистка при размонтировании (если нужно)
+      window.addEventListener('beforeunload', () => {
+        clearInterval(rainInterval);
+      });
+    });
+  </script>
 </head>
 
 <body>
-  <div id="fullscreen-icon">
+  <div id="fullscreen-icon" style="filter: invert(50%) sepia(100%) saturate(260%) hue-rotate(-200deg);">
     <div class="fullscreen-wrapper">
       <img src="assets/icons/fullscreen.svg" alt="FullScreen" style="opacity: 90%;">
       <div class="fullscreen-text">
@@ -35,7 +105,7 @@
     </div>
   </div>
 
-  <div class="background" style="filter: sepia(0.15) brightness(0.7)"></div>
+  <div class="background-music" style="filter: sepia(0.15) brightness(0.7)"></div>
 
   <main class="index-music-container">
     <div class="music-header">
@@ -126,7 +196,7 @@
   </main>
 
   <nav class="bottom-nav">
-    <div class="nav-icons-container">
+    <div class="nav-icons-container" style="filter: hue-rotate(220deg) saturate(70%);">
       <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
         <img src="assets/icons/music.svg" alt="Музыка">
       </a>
