@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="AWALORES - экспериментальная электронная музыка. Слушайте новый трек 'Only' и другие релизы">
+    <meta name="keywords" content="AWALORES, музыка, электронная музыка, инди, экспериментальная музыка, Only">
+    <meta name="author" content="AWALORES">
+    <!-- Open Graph -->
+    <meta property="og:title" content="AWALORES - Only">
+    <meta property="og:description" content="Слушайте новый трек Only от AWALORES">
+    <meta property="og:image" content="https://awalores-only.vercel.app/assets/images/albumlogo.png">
+    <meta property="og:url" content="https://awalores-only.vercel.app/">
+    <meta property="og:type" content="website">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AWALORES - Only">
+    <meta name="twitter:description" content="Экспериментальная электронная музыка">
+    <meta name="twitter:image" content="https://awalores-only.vercel.app/assets/images/albumlogo.png">
+    <meta name="music:release_date" content="2025-04-15">
+    <link rel="canonical" href="https://awalores-only.vercel.app/" />
     <title>Only — AWALORES</title>
     <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
     <link rel="icon" href="assets/favicon/favicon-32x32.png" type="image/png">
@@ -15,20 +31,25 @@
           "@context": "https://schema.org",
           "@type": "MusicGroup",
           "name": "AWALORES",
-          "description": "Современный музыкальный проект с уникальным звучанием",
-          "foundingDate": "2022-09-09",
-          "genre": ["Экспериментальная музыка", "Электронная музыка", "Инди", "Эмбиент"],
-          "image": "https://avatars.yandex.net/get-music-content/13449652/515d9479.p.17363429/m1000x1000",
+          "description": "Современный музыкальный проект с уникальным звучанием, сочетающим элементы электронной музыки и атмосферные звуковые ландшафты",
+          "url": "https://awalores-only.vercel.app/",
+          "logo": "https://awalores-only.vercel.app/assets/images/albumlogo.png",
+          "image": "https://awalores-only.vercel.app/assets/images/albumlogo.png",
+          "genre": ["Electronic", "Experimental", "Indie", "Ambient"],
           "sameAs": [
-            "https://band.link/awalores",
-            "https://vk.com/awalores",
             "https://music.yandex.ru/artist/17363429",
-            "https://www.youtube.com/channel/UCQqDNJ4uwps4s9uXhW-oHVQ",
-            "https://www.tiktok.com/@awalores"
+            "https://vk.com/awalores",
+            "https://www.youtube.com/channel/UCQqDNJ4uwps4s9uXhW-oHVQ"
           ],
-          "url": "https://awalores-only.vercel.app/"
+          "track": {
+            "@type": "MusicRecording",
+            "name": "Only",
+            "duration": "PT3M27S",
+            "url": "https://awalores-only.vercel.app/",
+            "image": "https://awalores-only.vercel.app/assets/images/albumlogo.png"
+          }
         }
-    </script>
+        </script>
     <link rel="stylesheet" href="css/styles.css">
     <script>
         if (!localStorage.getItem("splashShown")) {
@@ -39,7 +60,7 @@
 </head>
 
 <body>
-    <div id="fullscreen-icon" style="filter: invert(50%) sepia(100%) saturate(400%) hue-rotate(-20deg);">
+    <div id="fullscreen-icon" style="filter: invert(50%) sepia(100%) saturate(300%) hue-rotate(-10deg);">
         <div class="fullscreen-wrapper">
             <img src="assets/icons/fullscreen.svg" alt="FullScreen">
             <div class="fullscreen-text">
@@ -55,7 +76,7 @@
 
     <main class="index-container">
         <div class="album-container">
-            <img src="assets/images/albumlogo.png" alt="Обложка альбома" class="album-cover">
+            <img src="assets/images/albumlogo.png" alt="Обложка альбома AWALORES - Only" aria-label="Обложка трека Only" class="album-cover">
 
             <div id="play-button" class="play-button">
                 <img src="assets/icons/play.svg" alt="Play" class="play-icon" id="play-icon">
@@ -86,7 +107,9 @@
     <div id="top-notification" class="top-notification">
         👈 Чтобы было красиво,<br>жми на иконку
     </div>
-
+    <div class="description" style="display:none;">
+        AWALORES - современный музыкальный проект с уникальным звучанием, сочетающим элементы электронной музыки и атмосферные звуковые ландшафты. Проект стал известен благодаря современным технологиям производства музыки, создавая композиции, которые находят отклик у своей целевой аудитории. Имеет в своём запасе 2 полноценных альбома (It Too Much; Moral Violence) и 2 мини-альбома (I.T.M.; Freedom IRL Exists)
+      </div>
     <script src="js/notification.js"></script>
     <script src="js/audio-player.js"></script>
     <script src="js/magic-bg.js" defer></script>
