@@ -31,7 +31,7 @@
         },
         {
             "src": "/sitemap.xml",
-            "dest": "/sitemap.xml",
+            "dest": "/sitemap.xml.txt",
             "headers": {
                 "Content-Type": "application/xml"
             }
