@@ -11,17 +11,11 @@
         },
         {
             "src": "/sitemap.xml",
-            "dest": "/sitemap.xml",
-            "headers": {
-                "Content-Type": "application/xml"
-            }
+            "dest": "/api/sitemap.js"
         },
         {
             "src": "/robots.txt",
-            "dest": "/robots.txt",
-            "headers": {
-                "Content-Type": "text/plain"
-            }
+            "dest": "/api/robots.js"
         },
         {
             "src": "/(.*)",
