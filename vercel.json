@@ -1,32 +1,49 @@
 {
+    "version": 2,
     "headers": [
         {
-          "source": "/sitemap.xml",
-          "headers": [
-            {
-              "key": "Content-Type",
-              "value": "application/xml"
-            }
-          ]
+            "source": "/sitemap.xml",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml"
+                }
+            ]
+        },
+        {
+            "source": "/robots.txt",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain"
+                }
+            ]
         }
-      ],
-    "version": 2,
+    ],
     "routes": [
         {
             "src": "/api/(.*)",
             "dest": "/api/$1"
         },
         {
-            "src": "/(.*)",
-            "dest": "/client/$1"
-        },
-        {
             "src": "/assets/(.*)",
             "dest": "/client/assets/$1"
         },
         {
+            "src": "/sitemap.xml",
+            "dest": "/sitemap.xml",
+            "headers": {
+                "Content-Type": "application/xml"
+            }
+        },
+        {
             "src": "/(.*)",
-            "dest": "/client/index.html"
+            "dest": "/client/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/client/index.html",
+            "status": 200
         }
     ]
 }
