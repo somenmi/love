@@ -951,10 +951,14 @@ body, html {
 
 #sparkle-canvas {
   filter:   
-  saturate(100%) 
-  hue-rotate(90deg)
-  brightness(1)
-  invert(0)
+  contrast(0.95)
   sepia(100%) 
+  brightness(1.05)
   ;
+}
+
+:root {
+  --sparkle-speed: 1;
+  --sparkle-density: 1;
+  --sparkle-intensity: 1;
 }

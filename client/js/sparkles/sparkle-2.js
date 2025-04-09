@@ -1,10 +1,9 @@
-// js/sparkles/sparkle-2.js
-document.addEventListener('DOMContentLoaded', function() {
-    // Создаем canvas динамически
+document.addEventListener('DOMContentLoaded', function () {
+    // Создаем canvas
     const canvas = document.createElement('canvas');
     canvas.id = "sparkle-canvas";
     document.body.insertBefore(canvas, document.body.firstChild);
-    
+
     // Стили для canvas
     Object.assign(canvas.style, {
         position: 'fixed',
@@ -16,26 +15,49 @@ document.addEventListener('DOMContentLoaded', function() {
         pointerEvents: 'none'
     });
 
-    // Определение мобильных устройств
-    const mobile = navigator.userAgent.match(/Android|webOS|iPhone|BlackBerry|Windows Phone/i);
-    
-    // Инициализация WebGL с прозрачностью
+    // Проверка мобильного устройства
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+
+    // Получаем CSS переменные один раз в начале
+    const cssSpeed = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--sparkle-speed')) || 1;
+
+    // Инициализация WebGL
     const gl = canvas.getContext('webgl', {
         alpha: true,
-        premultipliedAlpha: false
+        premultipliedAlpha: false,
+        powerPreference: isMobile ? 'low-power' : 'default'
     });
-    
-    if(!gl) {
-        console.error("WebGL не инициализирован");
+
+    if (!gl) {
+        console.error("WebGL не поддерживается");
         return;
     }
 
-    // Настройки эффекта
-    let layers_ = mobile ? 6 : 3;
-    const dt = 0.006;
-    let time = 0.0;
+    if (isMobile) {
+        gl.getExtension('EXT_shader_texture_lod');
+        gl.getExtension('OES_standard_derivatives');
+    }
 
-    // Шейдеры (ваши оригинальные с небольшими изменениями)
+    // Настройки эффекта (единое место для всех параметров)
+    const settings = {
+        layers: isMobile ? 3 : 6,
+        speed: (isMobile ? 0.001 : 0.001) * cssSpeed,
+        scale: isMobile ? 6 : 12,
+        intensity: isMobile ? 1.5 : 2.0,
+        particleSize: isMobile ? 0.08 : 0.1,
+        particleDensity: isMobile ? 0.7 : 1.5,
+        colorIntensity: isMobile ? 0.8 : 1.0,
+        baseColor: [0.02, 0.02, 0.05],
+        dt: isMobile ? 0.0003 : 0.0004,
+        mobileBoost: isMobile ? 1.5 : 1.0,    // Усиление эффекта для мобильных
+        minVisible: 0.05     // Минимальная видимость частиц
+    };
+
+    let time = 0.0;
+    let lastTime = 0;
+
+    // Вершинный шейдер
     const vertexSource = `
         attribute vec2 position;
         void main() {
@@ -43,89 +65,91 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
 
+    // Фрагментный шейдер с правильными подстановками
     const fragmentSource = `
-        precision highp float;
-
-        uniform float width;
-        uniform float height;
-        uniform float time;
+    precision highp float;
+    
+    uniform float width;
+    uniform float height;
+    uniform float time;
+    
+    float random(vec2 p) {
+        return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+    }
+    
+    vec2 random2(vec2 p) {
+        return vec2(random(p), random(p * 1.1));
+    }
+    
+    float getGlow(float dist, float radius, float intensity) {
+        return pow(radius/(dist+0.001), ${settings.intensity.toFixed(1)});
+    }
+    
+    void main() {
+        float t = 1.0 + time * 0.01;
+        const float layers = ${settings.layers}.0;
+        const float scale = ${settings.scale}.0;
+        const float del = 1.0/layers;
         
-        vec2 resolution = vec2(width, height);
-
-        float random(vec2 par) {
-            return fract(sin(dot(par.xy, vec2(12.9898, 78.233))) * 43758.5453);
-        }
-
-        vec2 random2(vec2 par) {
-            float rand = random(par);
-            return vec2(rand, random(par+rand));
-        }
-
-        float getGlow(float dist, float radius, float intensity) {
-            return pow(radius/dist, intensity);
-        }
-
-        void main() {
-            float t = 1.0 + time * 0.010;
-            const float layers = ${layers_}.0;
-            float scale = 96.0;
-            float depth;
-            float phase;
-            float rotationAngle = time * -0.1;
-            float size;
-            float glow;
-            const float del = 1.0/layers;
-            
-            vec2 uv;
-            vec2 fl;
-            vec2 local_uv;
-            vec2 index;
-            vec2 pos;
-            vec2 seed;
-            vec2 centre;    
-            vec2 cell;
+        vec3 col = vec3(0.0);
+        
+        for(float i = 0.0; i < ${settings.particleDensity.toFixed(1)}; i += del) {
+            float depth = fract(i + t);
             vec2 rot = vec2(cos(t), sin(t));
+            vec2 centre = rot * 0.2 * depth + 0.5;
+            vec2 uv = (gl_FragCoord.xy - centre * vec2(width, height)) / width;
             
-            mat2 rotation = mat2(cos(rotationAngle), -sin(rotationAngle), 
-                           sin(rotationAngle), cos(rotationAngle));
-            vec3 col = vec3(0);
-            vec3 tone;
+            float rotationAngle = time * -0.1;
+            mat2 rotation = mat2(
+                cos(rotationAngle), -sin(rotationAngle),
+                sin(rotationAngle), cos(rotationAngle)
+            );
+            uv *= rotation;
+            uv *= mix(scale, 0.0, depth);
             
-            for(float i = 0.0; i <= 1.0; i+=del) {
-                depth = fract(i + t);
-                centre = rot * 0.2 * depth + 0.5;
-                uv = centre-gl_FragCoord.xy/resolution.x;
-                uv *= rotation;
-                uv *= mix(scale, 0.0, depth);
-                fl = floor(uv);
-                local_uv = uv - fl - 0.5;
-
-                for(float j = -1.0; j <= 1.0; j++) {
-                    for(float k = -1.0; k <= 1.0; k++) {
-                        cell = vec2(j,k);
-                        index = fl + cell;
-                        seed = 128.0 * i + index;
-                        pos = cell + 0.9 * (random2(seed) - 0.5);
-                        phase = 128.0 * random(seed);
-                        tone = vec3(random(seed), random(seed + 1.0), random(seed + 2.0));
-                        size = (0.1 + 0.5 + 0.5 * sin(phase * t)) * depth;
-                        glow = size * getGlow(length(local_uv-pos), 0.03, 2.0);
-                        col += 1.0 * vec3(0.02 * glow) + tone * glow;
-                    }
+            vec2 fl = floor(uv);
+            vec2 local_uv = uv - fl - 0.5;
+    
+            for(int j = -1; j <= 1; j++) {
+                for(int k = -1; k <= 1; k++) {
+                    vec2 cell = vec2(float(j), float(k));
+                    vec2 index = fl + cell;
+                    vec2 seed = 128.0 * i + index;
+                    vec2 pos = cell + 0.9 * (random2(seed) - 0.5);
+                    float phase = 128.0 * random(seed);
+                    vec3 tone = vec3(
+                        random(seed),
+                        random(seed + 1.0),
+                        random(seed + 2.0)
+                    );
+                    float size = (${settings.particleSize.toFixed(2)} + 0.5 + 0.5 * sin(phase * t)) * depth;
+                    float glow = size * getGlow(length(local_uv-pos), 0.03, 2.0);
+                    col += ${settings.colorIntensity.toFixed(1)} * vec3(
+                        ${settings.baseColor[0].toFixed(2)},
+                        ${settings.baseColor[1].toFixed(2)},
+                        ${settings.baseColor[2].toFixed(2)}
+                    ) * glow + tone * glow;
                 }
             }
-            
-            col = 1.0 - exp(-col);
-            gl_FragColor = vec4(col, 0.8); // Прозрачность
         }
+        
+        // Финалная обработка цвета с оптимизациями для мобильных
+                    float visibilityBoost = ${isMobile ? settings.mobileBoost.toFixed(1) : '1.0'};
+            float minVisibility = ${settings.minVisible.toFixed(2)};
+    
+            col = 1.0 - exp(-col * visibilityBoost);
+            col = max(col, vec3(minVisibility)); // Гарантируем минимальную видимость
+    
+            gl_FragColor = vec4(col, 0.8);
+    }
     `;
 
     // Компиляция шейдеров
-    function compileShader(shaderSource, shaderType) {
-        const shader = gl.createShader(shaderType);
-        gl.shaderSource(shader, shaderSource);
+    function compileShader(source, type) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
         gl.compileShader(shader);
-        if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
             console.error("Ошибка компиляции шейдера:", gl.getShaderInfoLog(shader));
             return null;
         }
@@ -135,23 +159,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Создание программы
     const vertexShader = compileShader(vertexSource, gl.VERTEX_SHADER);
     const fragmentShader = compileShader(fragmentSource, gl.FRAGMENT_SHADER);
-    
-    if(!vertexShader || !fragmentShader) return;
+
+    if (!vertexShader || !fragmentShader) return;
 
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
-    
-    if(!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
         console.error("Ошибка линковки программы:", gl.getProgramInfoLog(program));
         return;
     }
-    
+
     gl.useProgram(program);
 
     // Настройка вершинного буфера
-    const vertexData = new Float32Array([-1,1, -1,-1, 1,1, 1,-1]);
+    const vertexData = new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]);
     const vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
@@ -167,11 +191,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Функция изменения размера
     function onWindowResize() {
-        canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-        canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-        canvas.style.width = canvas.offsetWidth + 'px';
-        canvas.style.height = canvas.offsetHeight + 'px';
-        
+        const dpr = isMobile ? Math.min(1.5, window.devicePixelRatio) : window.devicePixelRatio;
+        canvas.width = Math.floor(canvas.offsetWidth * dpr);
+        canvas.height = Math.floor(canvas.offsetHeight * dpr);
+
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform1f(widthHandle, canvas.width);
         gl.uniform1f(heightHandle, canvas.height);
@@ -186,14 +209,33 @@ document.addEventListener('DOMContentLoaded', function() {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.enable(gl.BLEND);
 
-    // Функция анимации
-    function draw() {
-        time += dt;
-        gl.uniform1f(timeHandle, time);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    // Функция анимации с контролем скорости для мобильных
+    // Функция анимации с исправлением
+    function draw(currentTime) {
+        if (!lastTime) lastTime = currentTime;
+        const delta = currentTime - lastTime;
+        const targetFPS = isMobile ? 60 : 60;
+        const frameInterval = 1000 / targetFPS;
+
+        if (delta > frameInterval) {
+            time += settings.dt; // ИСПРАВЛЕНО: Используем settings.dt вместо dt
+            gl.uniform1f(timeHandle, time);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            lastTime = currentTime;
+        }
+
+        if (isMobile) {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); // Принудительный первый рендер
+        }
+
         requestAnimationFrame(draw);
     }
 
-    draw();
+    requestAnimationFrame(draw);
+
+    console.log('WebGL settings:', settings);
+    console.log('Mobile:', isMobile, 'DPR:', window.devicePixelRatio, 'Canvas size:', canvas.width, canvas.height);
+
 });

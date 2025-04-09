@@ -42,7 +42,7 @@ previewAudio.addEventListener("ended", function () {
 });
 
 albumCover.addEventListener("click", function() {
-  window.open("https://ваша-ссылка-на-бэндлинк", "_blank"); // добавить ссылку
+  window.open("https://band.link/awalores_only", "_blank"); // добавить ссылку
 });
 
 [playIcon, pauseIcon].forEach(icon => {

@@ -30,6 +30,13 @@
         }
     </script>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        :root {
+            --sparkle-speed: 1;
+            --sparkle-density: 1;
+            --sparkle-intensity: 1;
+        }
+        </style>
     <script>
         if (!localStorage.getItem("splashShown")) {
             window.location.href = "splash.html";
@@ -39,7 +46,13 @@
 </head>
 
 <body>
-
+    <style>
+        :root {
+            --sparkle-speed: 1;
+            --sparkle-density: 1;
+            --sparkle-intensity: 1;
+        }
+        </style>
     <div id="fullscreen-icon">
         <div class="fullscreen-wrapper">
             <img src="assets/icons/fullscreen.svg" alt="FullScreen">
@@ -71,7 +84,7 @@
     </main>
 
     <nav class="bottom-nav">
-        <div class="nav-icons-container">
+        <div class="nav-icons-container" style="filter: hue-rotate(50deg);">
             <a href="music.html" class="nav-icon" onclick="delayNavigation(event)">
                 <img src="assets/icons/music.svg" alt="Музыка">
             </a>
