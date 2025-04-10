@@ -20,6 +20,13 @@
         {
             "src": "/(.*)",
             "dest": "/client/$1"
+        },
+        {
+            "src": "/(google|yandex)_.+\\.html",
+            "dest": "/$0",
+            "headers": {
+                "Content-Type": "text/html"
+            }
         }
     ]
 }
