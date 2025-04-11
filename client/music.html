@@ -6,7 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>Music — AWALORES</title>
+  <meta name="description"
+    content="Все альбомы и синглы AWALORES: Freedom IRL Exists, Moral Violence, It Too Much, Only и другие. Слушайте на всех площадках">
+  <meta name="keywords"
+    content="AWALORES, авалорес, авалорэс, альбомы, синглы, музыка, релизы, Freedom IRL Exists, Moral Violence, I.T.M., It Too Much, Only, To Pieces, Deficit / Дефицт, Now, Later, Happy New Year Listeners, Handpan Song from Non-Existence, Behind Heart (2023 Remastered), You Know / Ты же знаешь, Grace">
+  <meta property="og:title" content="AWALORES — Все релизы">
+  <meta property="og:description" content="Полная дискография AWALORES: альбомы и синглы в одном месте">
+  <meta property="og:image" content="https://awalores-only.vercel.app/assets/images/it_too_much.png">
+  <meta property="og:url" content="https://awalores-only.vercel.app/music.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWALORES — Все релизы">
+  <meta name="twitter:description" content="Дискография экспериментальной электронной музыки">
+  <title>AWALORES — Music</title>
   <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
   <link rel="icon" href="assets/favicon/favicon-32x32.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/favicon/favicon-180x180.png">
@@ -28,12 +40,12 @@
 
       const CONFIG = {
         DESKTOP: {
-          COUNT: 70, // Одновременно видимых капель
+          COUNT: 70,
           LENGTH_MIN: 20,
           LENGTH_MAX: 40,
           SPEED_MIN: 1,
           SPEED_MAX: 3,
-          SPAWN_RATE: 50 // Новые капли каждые 50мс
+          SPAWN_RATE: 50
         },
         MOBILE: {
           COUNT: 30,
@@ -48,7 +60,6 @@
       const isMobile = window.innerWidth < 768;
       const config = isMobile ? CONFIG.MOBILE : CONFIG.DESKTOP;
 
-      // Функция создания одной капли
       function createRaindrop() {
         const raindrop = document.createElement('div');
         raindrop.className = 'raindrop';
@@ -70,26 +81,214 @@
 
         rainContainer.appendChild(raindrop);
 
-        // Удаляем каплю после завершения анимации
         setTimeout(() => {
           raindrop.remove();
         }, speed * 1000);
       }
 
-      // Создаём начальные капли
       for (let i = 0; i < config.COUNT; i++) {
         setTimeout(createRaindrop, Math.random() * 2000);
       }
 
-      // Запускаем непрерывное создание новых капель
       const rainInterval = setInterval(createRaindrop, config.SPAWN_RATE);
 
-      // Очистка при размонтировании (если нужно)
       window.addEventListener('beforeunload', () => {
         clearInterval(rainInterval);
       });
     });
   </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Дискография AWALORES",
+      "description": "Все альбомы и синглы музыкального исполнителя",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "MusicAlbum",
+            "name": "Freedom IRL Exists",
+            "numTracks": 5,
+            "url": "https://open.spotify.com/album/1dLdsZRMJT8ZCiUGKlYzXP",
+            "image": "https://awalores-only.vercel.app/assets/images/freedom_irl_exists.png",
+            "byArtist": {
+              "@type": "MusicGroup",
+              "name": "AWALORES"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "MusicAlbum",
+            "name": "Moral Violence",
+            "numTracks": 24,
+            "url": "https://open.spotify.com/album/7cWsRDX0uW7sYVpuIEyyeR",
+            "image": "https://awalores-only.vercel.app/assets/images/moral_violence.png",
+            "byArtist": {
+              "@type": "MusicGroup",
+              "name": "AWALORES"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "MusicAlbum",
+            "numTracks": 13,
+            "name": "It Too Much",
+            "url": "https://open.spotify.com/album/6gOaNH6TGlJSmd0LCXR6vN",
+            "image": "https://awalores-only.vercel.app/assets/images/it_too_much.png",
+            "byArtist": {
+              "@type": "MusicGroup",
+              "name": "AWALORES"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "MusicAlbum",
+            "name": "I.T.M.",
+            "numTracks": 8,
+            "url": "https://open.spotify.com/album/5NOEarD3F9N36Jle98Ncrx",
+            "image": "https://awalores-only.vercel.app/assets/images/itm.png",
+            "byArtist": {
+              "@type": "MusicGroup",
+              "name": "AWALORES"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Only",
+            "url": "https://awalores-only.vercel.app/music.html", <!-- Добавить релиз -->
+            "image": "https://awalores-only.vercel.app/assets/images/only.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "To Pieces",
+            "url": "https://open.spotify.com/album/6aWB2PnWzBVh6a5KLeSarW",
+            "image": "https://awalores-only.vercel.app/assets/images/to_pieces.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Techno Rave",
+            "url": "https://open.spotify.com/album/0WUfS8WaSiTQotz9Y9dyBM",
+            "image": "https://awalores-only.vercel.app/assets/images/techno_rave.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Дефицт",
+            "url": "https://open.spotify.com/album/2XMCqlh4gF8lXeXePfTNhk",
+            "image": "https://awalores-only.vercel.app/assets/images/deficit.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Now",
+            "url": "https://open.spotify.com/album/63X03SwMb5mZXVEL6rFoJI",
+            "image": "https://awalores-only.vercel.app/assets/images/now.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Later",
+            "url": "https://open.spotify.com/album/1zvPELnaWWYyJxW3fvAb1d",
+            "image": "https://awalores-only.vercel.app/assets/images/later.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Happy New Year Listeners",
+            "numTracks": 2,
+            "url": "https://open.spotify.com/album/1GEZHJg1j38aiIIrD4yfK6",
+            "image": "https://awalores-only.vercel.app/assets/images/new_year.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Handpan Song from Non-Existence",
+            "url": "https://open.spotify.com/album/4HEbn4ifXcX8LC9d4E6TYH",
+            "image": "https://awalores-only.vercel.app/assets/images/hp.png",
+            "byArtist": "AWALORES"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Behind Heart (2023 Remastered)",
+            "url": "https://open.spotify.com/album/5lnQlexV2YEiEVTihNLUeV",
+            "image": "https://awalores-only.vercel.app/assets/images/behind_heart.png",
+            "byArtist": "AWALORES"
+          }
+        },{
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Ты же знаешь",
+            "numTracks": 2,
+            "url": "https://open.spotify.com/album/1S34pVqg839qfQUdzVQxu8",
+            "image": "https://awalores-only.vercel.app/assets/images/you_know.png",
+            "byArtist": "AWALORES"
+          }
+        },{
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "MusicRecording",
+            "name": "Grace",
+            "numTracks": 2,
+            "url": "https://open.spotify.com/album/19ZRwJWKHFihQTFSnypCll",
+            "image": "https://awalores-only.vercel.app/assets/images/grace.png",
+            "byArtist": "AWALORES"
+          }
+        },
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -163,6 +362,9 @@
             <img src="assets/images/to_pieces.png" alt="To Pieces">
           </div>
           <div class="slider-item">
+            <img src="assets/images/techno_rave.png" alt="Techno Rave">
+          </div>
+          <div class="slider-item">
             <img src="assets/images/deficit.png" alt="Deficit / Дефицт">
           </div>
           <div class="slider-item">
@@ -225,7 +427,8 @@
             'https://music.yandex.ru/album/29925083', // It Too Much
             // singles
             'https://music.yandex.ru/artist/17363429', // Only
-            'https://music.yandex.ru/album/35392143/', // To Pieces
+            'https://music.yandex.ru/album/35392143', // To Pieces
+            'https://music.yandex.ru/album/32024673', // Techno Rave
             'https://music.yandex.ru/album/32024660', // Deficit / Дефицт
             'https://music.yandex.ru/album/30641993', // Now
             'https://music.yandex.ru/album/31350584', // Later
