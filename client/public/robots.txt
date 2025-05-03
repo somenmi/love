@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://awalores-only.vercel.app/sitemap.xml
+Sitemap: https://awalores-only.vercel.app/sitemap_v2.xml
